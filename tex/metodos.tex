@@ -1,0 +1,121 @@
+%--------------------------------------------------------------------------------------
+% Este arquivo contém a sua metodologia
+%--------------------------------------------------------------------------------------
+\chapter{Materiais e Métodos} \label{ch:MM} %Uma label é como você referencia uma seção no texto com a tag \ref{}
+
+\textcolor{red}{Design do método! (Marconi, Gil, Cervo) c/ diagrama}
+
+Dentre os dez artigos estudados, o atributo SST foi determinado em apenas três deles. O melhor resultado foi obtido para um modelo simplificado de regressão linear, em que as mangas foram divididas em três classes de acordo com o nível de SST, enquanto que para os demais modelos os resultados foram medianos ou ruins ao empregar no máximo três variáveis de entrada. Assim, nota-se uma carência de um modelo robusto e generalista para predição de SST. Desta forma, o estudo será conduzido de forma a investigar quais atributos visuais da manga mais se relacionam a esse atributo de qualidade, para que um bom modelo preditivo seja obtido.
+
+Os atributos a serem extraídos das imagens das mangas serão todos aqueles empregados nos dez artigos, listados na Tabela \ref{tab:artigos_att}. Estes atributos, juntamente dos valores reais de SST para cada manga, serão utilizados para a construção de modelos preditivos. As técnicas de inferência empregadas serão a Regressão linear e \textit{Random Forest}. Através da Regressão linear será verificada se há uma relação linear entre cada variável de entrada e a de saída, assim como foi realizado pelos autores que determinaram SST em seus trabalhos. Ademais, na técnica Random Forest todas as variáveis de entrada serão utilizadas em um mesmo modelo, e por meio deste serão determinadas as variáveis mais significativas para a predição de SST em mangas. 
+
+\section{Descrição das amostras}
+
+As mangas a serem utilizadas no estudo são das variedades ‘Palmer’ e ‘Tommy Atkins’, sendo duas das variedades mais produzidas no Vale do São Francisco (EMBRAPA SEMIÁRIDO, 2010). A variedade Palmer é caracterizada por frutos aromáticos e grandes, com peso de até 900 g, tom esverdeado ou arroxeado quando estão imaturos e cor vermelha quando maduros. Por outro lado, os frutos da variedade Tommy Atkins possuem um peso de aproximadamente 500 g e possuem uma coloração alaranjada, amarelada, avermelhada ou púrpura (NETO, 2009). 
+
+As amostras serão coletadas de pomares comerciais da Fazenda SpecialFruit Importação e Exportação Ltda. em Petrolina e Juazeiro. Serão marcadas trinta plantas distribuídas em cinco fileiras de plantio de um lote do pomar. A cada quinze dias serão colhidos manualmente 60 frutos (dois de cada planta), para cada variedade, iniciando-se dos 35 dias após a floração até o ponto de colheita comercial adotado pela Fazenda. \textcolor{red}{As mangas ficarão armazenadas para a aquisição das imagens também na pós-colheita. (Como se deu essa parceria?)}
+
+\section{Aquisição das imagens}
+
+As imagens das mangas serão obtidas para cada lado da fruta, que serão colocadas em uma caixa de madeira compensada com um orifício no topo (Figura \ref{img:caixa}), onde será posicionada uma câmera de 18 MP. O interior da caixa é preto fosco e contém uma superfíci enão reflexiva para o apoio das mangas. Na parte superior serão dispostos \textcolor{red}{3 LEDs brancos} para a iluminação das amostras. \textcolor{red}{(Origem do equipamento)}
+
+\imagem{0.1}{caixa}{Câmara para aquisição das imagens.}{(Autor, 2019).}
+
+\textcolor{red}{Foram tiradas fotos de 1080 mangas, sendo destas 480 da variedade ‘Tommy Atkins’ e 600 da ‘Palmer’. Os dois lados de cada amostra foram fotografados, de forma que no total obtiveram-se 2160 imagens.} 
+
+\textcolor{red}{A aquisição foi realizada de 15 em 15 dias para cada variedade, de forma que fossem obtidas imagens das mangas em diferentes estádios de maturação. Para a variedade ‘Tommy Atkins’, foram fotografadas 60 amostras por vez nas 7 primeiras coletas e 30 amostras nas 2 coletas subsequentes. A aquisição para a variedade ‘Palmer’ iniciou-se 1 semana após a da ‘Tommy Atkins’, com 60 amostras sendo fotografadas por  vez em 8 coletas e 30 amostras em 4 coletas subsequentes. A Figura \ref{img:caixa} exibe uma foto tirada para cada variedade.}
+
+\section{Obtenção dos valores de referência}
+
+Os valores reais de SST serão obtidos segundo o procedimento do Instituto Adolfo Lutz (2008), sendo também adotado por Yahaya et al. (2015). Nele, as mangas têm inicialmente sua polpa homogeneizada e filtrada por uma centrífuga. O suco extraído é colocado em um refratômetro digital (HI 96804, Hanna Instruments, USA) para a quantificação de SST em ºBrix. 
+
+\section{Construção dos modelos}
+
+\subsection{\textcolor{red}{Regressão Linear (Colocar na fundamentação?)}}
+
+A regressão linear consiste em uma técnica estatística utilizada para prever uma variável quantitativa com base em uma única variável de entrada. Ela é empregada quando o relacionamento entre $x$ e $y$ é presumidamente linear (JAMES et al., 2013), como mostra a Equação \ref{eq:rl1}:
+
+\begin{equation} \label{eq:rl1}
+	Y = \beta_0 + \beta_1X + \epsilon
+\end{equation}
+
+Em que $Y$ é o vetor de variável de saída, $X$ é o vetor de variável de entrada, $\beta_0$ e $\beta_1$ são o intercepto e inclinação da reta respectivamente e $\epsilon$ é o erro aleatório.
+
+Para que a estimação da variável de saída seja realizada, os parâmetros $\beta_0$ e $\beta_1$ devem inicialmente ser estimados, o que é feito normalmente pelo método de mínimos quadrados. Neste critério, busca-se minimizar a soma do quadrado dos resíduos (RSS – \textit{Residual Sum of Squares}), dada pela equação abaixo:
+
+\begin{equation} \label{eq:rss}
+	RSS = e_1^2 + e_2^2 + ... + e_n^2
+\end{equation}
+
+Em que $e_1^2$, $e_2^2$, ..., $e_n^2$ correspondem à diferença entre o valor previsto pelo modelo e o valor real para as $n$ amostras. Dada a função a ser minimizada, as expressões de $\beta_0$ e $\beta_1$ são dadas por:
+
+\begin{equation} \label{eq:rl2}
+	\beta_1 = \frac{\sum_{i=1}^n (x_i - \overline{x})(y_i - \overline{y})}{\sum_{i=1}^n(x_i - \overline{x})^2}
+\end{equation}
+
+\begin{equation} \label{eq:rl3}
+	\beta_0 = \overline{y} - \beta_1\overline{x}
+\end{equation}
+
+Em que $x$ corresponde ao valor da variável de entrada, $\overline{x}$ é a média dos valores de $x$, $y$ é o valor da variável de saída e $\overline{y}$ é a média dos valores de $y$.
+
+\subsection{\textcolor{red}{\textit{Random Forest} (Colocar na fundamentação?)}}
+
+A \textit{Random Forest} consiste em uma técnica \textit{ensemble} não linear, em que uma variável qualitativa ou quantitativa é determinada através de uma combinação de modelos de árvores de decisão (FRIEDMAN; HASTIE; TIBSHIRANI, 2001). A relação entre as variáveis de entrada e a de saída é modelada através de um conjunto de regras de decisão, construídas por divisões binárias e recursivas dos dados de treinamento. Cada regra de decisão utiliza uma única variável de entrada para a divisão dos dados, sendo ela selecionada a partir de um subconjunto aleatório de todas as variáveis. Um modelo de regressão é então construído a partir das variáveis selecionadas e o erro RSS é calculado (HUTENGS; VOHLAND, 2016). As regras de decisão e consequentemente as variáveis de entrada, são selecionadas visando a minimização desse erro. Assim, a \textit{Random Forest} permite a determinação das variáveis mais significativas para a predição da variável de saída. 
+
+O valor previsto resultante será a média dos resultados obtidos para cada árvore de decisão. Para evitar a correlação entre as árvores, elas são construídas a partir de subconjuntos não disjuntos dos dados de entrada, o que torna o modelo resultante mais estável, robusto e preciso (BREIMAN, 2001). 
+
+\section{Avaliação de desempenho dos modelos}
+
+Para a avaliação da capacidade preditiva dos modelos, será utilizada a estratégia de validação cruzada k-\textit{fold} (k-\textit{fold cross validation}). Ela é empregada para assegurar que não há um sobreajuste (\textit{overfitting}) no modelo, através da divisão do conjunto de dados em k subconjuntos disjuntos, com uma alocação das amostras para o conjunto de treinamento ou teste (DA SILVA; PERES; BOSCARIOLI, 2017). Assim, um dos subconjuntos será utilizado como teste e os k-1 demais para o treinamento, de forma que o modelo realize a predição para dados desconhecidos. Este procedimento é repetido k vezes, alterando os subconjuntos a cada vez.
+
+As predições resultantes serão avaliadas através de um teste de hipóteses e das métricas de correlação e RMSE, empregadas nos artigos em que a regressão foi realizada. Estes indicadores medem, respectivamente, o grau de dependência entre as variáveis de entrada e saída e a magnitude média dos erros estimados (ALVES; VECCHIA, 2011), conforme as equações abaixo:
+
+\begin{equation} \label{eq:r}
+	R = \frac{\sum_{i=1}^n (x_i - \overline{x})(y_i - \overline{y})}{\sqrt{\sum_{i=1}^n(x_i - \overline{x})^2} \sqrt{\sum_{i=1}^n (y_i - \overline{y})^2}}
+\end{equation}
+
+\begin{equation} \label{eq:rmse}
+	RMSE = \sqrt{\frac{1}{n} \sum_{i=1}^n (y_i - \hat{y}_i)^2}
+\end{equation}
+
+Em que $x_i$ é o valor da variável de entrada, $\overline{x}$ é a média dos valores de $x$, $y_i$ é o valor real da variável de saída, $\overline{y}$ é a média dos valores de $y$, $n$ é o número de amostras e $\hat{y}_i$ é o valor previsto para a variável de saída.
+
+% \subsection{Subseção de exemplo 1 - Referenciando seções} \label{subsec:subsec1}
+
+
+
+
+
+
+%--------------------------------------------------------------------------------------
+% Insere a seção de cronograma
+% Está comentada porque só é necessária no TCC I
+%--------------------------------------------------------------------------------------
+
+%\section{Cronograma} \label{sec:crono}
+
+%A tabela \ref{tab:cronograma} mostra o cronograma de atividades a serem executadas para o TCC II, com base no calendário de 201X.Y da UNIVASF.
+
+%\newpage
+%\begin{table}[!thb]
+%	%\huge
+%    \centering
+%    \caption{\label{tab:cronograma} Cronograma das atividades previstas para o TCC II}
+%%    \begin{adjustbox}{max width=\textwidth}
+%    \begin{tabular}{p{6.5cm}|c|c|c|c|c|c}
+%    \toprule
+%    \textbf{Atividade}                      & Nov & Dez & Jan & Fev & Mar & Abr \\ \hline
+%    Implementar o banco de dados              & X    & X     &       &        &          &          \\ \hline
+%    Desenvolver a API HTTP RESTful                      &   X   & X     &       &        &          &          \\ \hline
+%    Implementar o serviço de captura de dados        &      &      & X     &   X     &          &          \\ \hline
+%    Desenvolver a aplicação \textit{Web/mobile} para exibição dos dados         &      &      & X     &   X     &     X     &          \\ \hline
+ %   Teste do sistema            &      &       &       &        & X        &          %\\ \hline
+ %   Escrita do TCC II                       &   X   & X     & X     & X      & X        & X        \\ \hline
+%   Defesa do TCC II                        &      &       &       &        &          & X       \\
+%    \bottomrule
+ %   \end{tabular}
+ %   \end{adjustbox}
+%    \legend{\textbf{Fonte:} O autor.}
+%\end{table}
+
