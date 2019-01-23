@@ -104,16 +104,16 @@ Pode ser realizada a conversão de uma imagem no espaço de cores RGB para HSV, 
 
 A seguir estão descritas algumas das técnicas de pré-processamento mais comuns. Elas subdividem-se quanto ao domínio em que atuam, podendo ser realizadas no domínio espacial, em que as técnicas são aplicadas nos pixels diretamente, ou no domínio da frequência, em que os métodos são realizados no espectro de frequência da imagem (BEDI; KHANDELWAL, 2013). 
 
-\subsubsection{Filtro \textit{deblurring}}
+% \subsubsection{Filtro \textit{deblurring}}
 
-Uma imagem borrada é obtida quando a câmera que a fotografa ou o próprio objeto está em movimento. O ruído contido numa imagem borrada não é aditivo, ou seja, o pixel não é corrompido de forma independente da vizinhança (GONZALEZ; WOODS, 2009). Assim, a imagem borrada pode ser considerada como uma versão filtrada da imagem original, sendo representada conforme a Equação \ref{eq:dblr}.
+% Uma imagem borrada é obtida quando a câmera que a fotografa ou o próprio objeto está em movimento. O ruído contido numa imagem borrada não é aditivo, ou seja, o pixel não é corrompido de forma independente da vizinhança (GONZALEZ; WOODS, 2009). Assim, a imagem borrada pode ser considerada como uma versão filtrada da imagem original, sendo representada conforme a Equação \ref{eq:dblr}.
 
-\begin{equation} \label{eq:dblr}
-	g(x, y) = h(x, y)*f(x, y)+\eta(x, y)
-\end{equation}
+% \begin{equation} \label{eq:dblr}
+% 	g(x, y) = h(x, y)*f(x, y)+\eta(x, y)
+% \end{equation}
 
-Em que $g(x, y)$ corresponde à imagem borrada, $h(x, y)$ à função de degradação da imagem, $f(x, y)$ à imagem original e $\eta(x, y)$ a um ruído aditivo. 
-O propósito da filtragem \textit{deblurring} é “desfazer” a convolução entre a função de degradação e a imagem original, de forma a obter uma estimativa $f(x, y)$ da imagem sem borrão. Dentre as estratégias básicas de \textit{deblurring} estão o filtro de Wiener, filtro regularizado e algoritmo de Lucy-Richardson (YADAV; JAIN; CHUGH, 2016).
+% Em que $g(x, y)$ corresponde à imagem borrada, $h(x, y)$ à função de degradação da imagem, $f(x, y)$ à imagem original e $\eta(x, y)$ a um ruído aditivo. 
+% O propósito da filtragem \textit{deblurring} é “desfazer” a convolução entre a função de degradação e a imagem original, de forma a obter uma estimativa $f(x, y)$ da imagem sem borrão. Dentre as estratégias básicas de \textit{deblurring} estão o filtro de Wiener, filtro regularizado e algoritmo de Lucy-Richardson (YADAV; JAIN; CHUGH, 2016).
 
 \subsubsection{Filtro da mediana}
 
@@ -127,63 +127,130 @@ Estas técnicas consistem em operações morfológicas baseadas nas operações 
 
 \imagem{0.5}{morph_op}{\textcolor{red}{Operações morfológicas realizadas na letra "j". (a) Imagem original, (b) Operação de abertura, (c) Operação de fechamento}}{(Documentação OpenCV; 2018).}
 
-\subsubsection{Aguçamento da imagem (\textit{Image sharpening})}
+% \subsubsection{Aguçamento da imagem (\textit{Image sharpening})}
 
-O aguçamento é empregado visando o aumento de nitidez de uma imagem, para que as transições de intensidade sejam salientadas. Ele pode ser realizado através da diferenciação no domínio espacial, de forma que bordas e outras descontinuidades são realçadas e áreas com intensidades variando de forma suave são atenuadas. Dentre as técnicas comumente usadas há o laplaciano, gradiente e \textit{Unsharp Masking} (PRAVEEN; 2016). A Figura \ref{img:image_sharpening} demonstra o aguçamento por \textit{Unsharp Masking}.
+% O aguçamento é empregado visando o aumento de nitidez de uma imagem, para que as transições de intensidade sejam salientadas. Ele pode ser realizado através da diferenciação no domínio espacial, de forma que bordas e outras descontinuidades são realçadas e áreas com intensidades variando de forma suave são atenuadas. Dentre as técnicas comumente usadas há o laplaciano, gradiente e \textit{Unsharp Masking} (PRAVEEN; 2016). A Figura \ref{img:image_sharpening} demonstra o aguçamento por \textit{Unsharp Masking}.
 
-\begin{figure}[!htb]
-\centering
-    \caption{\label{img:image_sharpening} Aguçamento através de \textit{Unsharp Masking}.}
-    \subcaptionbox{Imagem original}{\includegraphics[scale=0.45]{img/unsharp1}}\qquad
-    \subcaptionbox{Imagem açugada}{\includegraphics[scale=0.45]{img/unsharp2}}
-    \legend{(\textbf{Fonte: } MathWorks Inc, 2016).}
-\end{figure}
+% \begin{figure}[!htb]
+% \centering
+%     \caption{\label{img:image_sharpening} Aguçamento através de \textit{Unsharp Masking}.}
+%     \subcaptionbox{Imagem original}{\includegraphics[scale=0.45]{img/unsharp1}}\qquad
+%     \subcaptionbox{Imagem açugada}{\includegraphics[scale=0.45]{img/unsharp2}}
+%     \legend{(\textbf{Fonte: } MathWorks Inc, 2016).}
+% \end{figure}
 
-\subsection{\textcolor{red}{Técnicas de inferência (mantenho isso? Jorge comentou "verificar se todas as técnicas serão usadas")}}
+\subsection{Segmentação de imagens}
+
+O objetivo da segmentação consiste em dividir a imagem em subconjuntos disjuntos, de forma a obter apenas a região desejada. A segmentação torna-se simples quando na imagem em questão há objetos contrastantes em um fundo uniforme. Dessa forma, pode-se utilizar uma abordagem baseada no histograma da imagem, que fornece a frequência dos níveis de intensidade dela (GONZALEZ; WOODS, 2009).
+
+\subsubsection{Limiarização}
+
+A limiarização é o método de segmentação mais simples, rápido e pouco custoso existente. Ela é utilizada em imagens em que os objetos nela presentes possuem uma absorção de luz uniforme ao longo de suas superfícies, de forma que, a partir de um valor limiar, ou \textit{threshold}, é possível fazer a separação completa dos objetos da imagem (\textcolor{red}{SONKA; HLAVAC; BOYLE, 2008}).
+
+Assim, dada uma imagem $f(i, j)$, estando representada em escala de cinza, obtém-se uma imagem segmentada $g(i, j)$ conforme a equação abaixo, considerando um \textit{threshold} T dado:
+
+\begin{equation} \label{eq:thrd}
+	g(i, j) =
+		\begin{cases}
+			1, & se \ f(i, j) \geq T, \\	
+			0, & se \ f(i, j) < T
+		\end{cases}
+\end{equation}
+
+% Assim, se uma imagem conter objetos com intensidades contrastantes, é possível realizar a limiarização. Para exemplificar, é mostrado na figura \ref{img:blns} uma imagem, sua versão em escala de cinza e seu histograma. 
+
+% \begin{figure}[!htb]
+% \centering
+%     \caption{\label{img:blns} Imagem original, em escala de cinza e seu histograma.}
+%     \subcaptionbox{Imagem original}{\includegraphics[scale=0.15]{img/balloons}}\qquad
+%     \subcaptionbox{Escala de cinza}{\includegraphics[scale=0.15]{img/gray_balloons}}\qquad
+%     \subcaptionbox{Histograma da imagem em escala de cinza}{\includegraphics[scale=0.12]{img/hist}}
+%     \legend{(\textbf{Fonte: } Autor, 2019).}
+% \end{figure}
+
+% Nota-se uma maior concentração de pixels com intensidades mais baixas, que correspondem às partes escuras da imagem. A figura \ref{img:thr_blns} mostra o resultado da limiarização utilizando um \textit{threshold} muito baixo, alto e o ideal para separação total entre os balões e o plano de fundo.
+
+\subsubsection{Segmentação de Otsu}
+
+Esta técnica de segmentação é eficaz para imagens bimodais, cujos histogramas possuem dois picos. Este método calcula um limiar ótimo que se localiza aproximadamente no meio dos dois picos (GONZALEZ; WOODS, 2009). O algoritmo de Otsu busca maximizar a variância entre classes. 
+
+\subsection{Contornos}
+
+\subsection{\textcolor{red}{Técnicas de inferência (Jorge comentou "verificar se todas as técnicas serão usadas")}}
 
 As técnicas aqui apresentadas são empregadas para a predição de uma variável de saída desejada com base nas variáveis de entrada fornecidas, através de modelos supervisionados de regressão ou classificação, em que a variável de saída é quantitativa ou qualitativa, respectivamente (DA SILVA; PERES; BOSCARIOLI, 2017). Para tal, deve-se utilizar um conjunto de amostras de treinamento, em que as variáveis de entrada e saída são conhecidas, para a construção de um modelo matemático que extraia padrões a partir dos dados fornecidos. Assim, tendo modelado o relacionamento entre as variáveis, pode-se realizar a predição para novas amostras, em que sua variável de saída é desconhecida (GAMA, 2015).
 
-\subsubsection{Rede neural artificial}
+% \subsubsection{Rede neural artificial}
 
-Uma rede neural artificial (RNA) é uma máquina projetada para modelar a maneira como um cérebro realiza uma tarefa particular (HAYKIN, 2001), e é empregada em problemas de regressão e classificação. A RNA possui uma arquitetura paralela e não linear, o que é alcançado através de neurônios artificiais (Figura \ref{img:rna}), que simulam os neurônios reais. Os neurônios artificiais são as unidades de processamento da rede e repassam informações através das conexões entre si, semelhantemente às sinapses no cérebro humano. 
+% Uma rede neural artificial (RNA) é uma máquina projetada para modelar a maneira como um cérebro realiza uma tarefa particular (HAYKIN, 2001), e é empregada em problemas de regressão e classificação. A RNA possui uma arquitetura paralela e não linear, o que é alcançado através de neurônios artificiais (Figura \ref{img:rna}), que simulam os neurônios reais. Os neurônios artificiais são as unidades de processamento da rede e repassam informações através das conexões entre si, semelhantemente às sinapses no cérebro humano. 
 
-\imagem{0.15}{rna}{Estrutura de um neurônio artificial}{(HAYKIN, 2001).}
+% \imagem{0.15}{rna}{Estrutura de um neurônio artificial}{(HAYKIN, 2001).}
 
-Os neurônios artificiais são organizados nas camadas de entrada, escondidas ou de saída. Inicialmente os dados de treinamento são fornecidos aos neurônios da camada de entrada e logo após eles são ponderados pelos pesos sinápticos dos neurônios das camadas escondidas. Nos neurônios da camada de saída, é aplicada a função de ativação sobre a soma dos dados provenientes dos neurônios da camada escondida, de forma a limitar o intervalo da amplitude da saída. Dentre as funções de ativação existentes estão disponíveis a função sigmoide, degrau, linear, entre outras.
+% Os neurônios artificiais são organizados nas camadas de entrada, escondidas ou de saída. Inicialmente os dados de treinamento são fornecidos aos neurônios da camada de entrada e logo após eles são ponderados pelos pesos sinápticos dos neurônios das camadas escondidas. Nos neurônios da camada de saída, é aplicada a função de ativação sobre a soma dos dados provenientes dos neurônios da camada escondida, de forma a limitar o intervalo da amplitude da saída. Dentre as funções de ativação existentes estão disponíveis a função sigmoide, degrau, linear, entre outras.
 
-Para a construção de uma rede neural, aplica-se um algoritmo de treinamento, onde se tenta inicialmente prever uma saída de acordo com os dados fornecidos. O erro de previsão é calculado e, a partir deste, os pesos sinápticos são ajustados. Esse processo é repetido para os dados de treinamento até que o critério de parada predefinido seja cumprido. 
+% Para a construção de uma rede neural, aplica-se um algoritmo de treinamento, onde se tenta inicialmente prever uma saída de acordo com os dados fornecidos. O erro de previsão é calculado e, a partir deste, os pesos sinápticos são ajustados. Esse processo é repetido para os dados de treinamento até que o critério de parada predefinido seja cumprido. 
 
-\subsubsection{Máquina de vetores de suporte}
+% \subsubsection{Máquina de vetores de suporte}
 
-A máquina de vetores de suporte (SVM, \textit{Support Vector Machine}) é um algoritmo supervisionado utilizado para classificação. Ela constrói hiperplanos em um espaço multidimensional, buscando um hiperplano tal que haja uma melhor separação das classes, através da minimização da função objetivo por programação quadrática. A margem ótima é escolhida de acordo com sua distância até os pontos mais próximos, que se localizam nas fronteiras das classes e são chamados de vetores de suporte. Prioriza-se o hiperplano em que essa distância é a maior dentre os demais.
+% A máquina de vetores de suporte (SVM, \textit{Support Vector Machine}) é um algoritmo supervisionado utilizado para classificação. Ela constrói hiperplanos em um espaço multidimensional, buscando um hiperplano tal que haja uma melhor separação das classes, através da minimização da função objetivo por programação quadrática. A margem ótima é escolhida de acordo com sua distância até os pontos mais próximos, que se localizam nas fronteiras das classes e são chamados de vetores de suporte. Prioriza-se o hiperplano em que essa distância é a maior dentre os demais.
 
-Uma das características mais úteis das SVMs é a possibilidade de classificação de dados que não são linearmente separáveis. Para isso são utilizadas funções \textit{kernel}, que mapeiam os dados de entrada para um plano de dimensão maior, para que a margem seja traçada entre as classes. Existem diferentes funções \textit{kernel}, como a linear, função de base radial (RBF, \textit{Radial Base Function}), sigmóide e polinomial. 
+% Uma das características mais úteis das SVMs é a possibilidade de classificação de dados que não são linearmente separáveis. Para isso são utilizadas funções \textit{kernel}, que mapeiam os dados de entrada para um plano de dimensão maior, para que a margem seja traçada entre as classes. Existem diferentes funções \textit{kernel}, como a linear, função de base radial (RBF, \textit{Radial Base Function}), sigmóide e polinomial. 
 
-\subsubsection{Máquina de vetores de suporte por mínimos quadrados}
+% \subsubsection{Máquina de vetores de suporte por mínimos quadrados}
 
-As máquinas de vetores de suporte por mínimos quadrados (LS-SVM, \textit{Least-Squares Support Vector Machine}) são reformulações da técnica SVM. A minimização da função objetivo é feita através de sistemas lineares KKT (Karush-Kuhn-Tucker), o que exige um tempo computacional menor que a técnica predecessora, sem perda na qualidade das soluções (ABREU, 2016). 
+% As máquinas de vetores de suporte por mínimos quadrados (LS-SVM, \textit{Least-Squares Support Vector Machine}) são reformulações da técnica SVM. A minimização da função objetivo é feita através de sistemas lineares KKT (Karush-Kuhn-Tucker), o que exige um tempo computacional menor que a técnica predecessora, sem perda na qualidade das soluções (ABREU, 2016). 
 
-\subsubsection{Análise discriminante múltipla}
+% \subsubsection{Análise discriminante múltipla}
 
-A análise discriminante é empregada quando o atributo alvo é categórico e as variáveis de entrada são quantitativas. Quando o atributo alvo possui mais de dois valores possíveis, tem-se a análise discriminante múltipla (MDA, \textit{Multiple Discriminant Analysis}). O principal objetivo da MDA é identificar as variáveis que melhor discriminam as classes, e, para isto, são construídas funções discriminantes, que consistem em combinações lineares das variáveis de entrada. Este objetivo é alcançado através da maximização da variância entre os subgrupos de variáveis em relação à variância dentro de um mesmo grupo (MIHALOVIC, 2016). 
+% A análise discriminante é empregada quando o atributo alvo é categórico e as variáveis de entrada são quantitativas. Quando o atributo alvo possui mais de dois valores possíveis, tem-se a análise discriminante múltipla (MDA, \textit{Multiple Discriminant Analysis}). O principal objetivo da MDA é identificar as variáveis que melhor discriminam as classes, e, para isto, são construídas funções discriminantes, que consistem em combinações lineares das variáveis de entrada. Este objetivo é alcançado através da maximização da variância entre os subgrupos de variáveis em relação à variância dentro de um mesmo grupo (MIHALOVIC, 2016). 
 
 \subsubsection{Regressão linear múltipla}
 
-A MLR (\textit{Multiple Linear Regression}) é um método de regressão que realiza uma combinação linear dos atributos de entrada, de forma a prever uma saída. Ela é uma extensão da linear regressão simples, possuindo a seguinte equação:
+A MLR (\textit{Multiple Linear Regression}) é um método de regressão que assume um relacionamento linear entre os atributos de entrada e o de saída (JAMES et al., 2013). Ela é uma extensão da regressão simples, que emprega apenas uma variável de entrada, e apresenta um bom desempenho quando empregada em um conjunto de dados que não possua ruído ou colinearidade entre os atributos. A equação que descreve a MLR é dada por:
 
 \begin{equation} \label{eq:mlr}
-	Y = \beta X + \epsilon
+	Y = \beta_0 + \beta_1 X + \epsilon
 \end{equation}
 
-Em que $Y$ é o vetor de atributo alvo, $X$ é o vetor de atributos, $\beta$ é o vetor de coeficientes da equação e $\epsilon$ é o erro aleatório. A função que melhor se ajusta aos dados é encontrada com o cálculo da soma do quadrado dos resíduos, de forma a minimizar este valor. A MLR apresenta um bom desempenho quando empregada em um conjunto de dados que não possua colinearidade entre os atributos ou ruído. 
+Em que $Y$ é o vetor de atributo alvo, $\beta_0$ é o intercepto, $\beta_1$ é o vetor de inclinações da equação, $X$ é o vetor de atributos e $\epsilon$ é o erro aleatório. 
 
-\subsubsection{Sistema de inferência \textit{fuzzy}}
+Os parâmetros da MLR são normalmente estimados pelo método dos mínimos quadrados, que busca minimizar a soma do quadrado dos resíduos (RSS – \textit{Residual Sum of Squares}), dada pela equação abaixo:
 
-A lógica \textit{fuzzy} foi criada para atender a necessidade de se trabalhar com informações vagas ou incertas, o que não poderia ser feito através da lógica clássica, em que as informações são representadas de forma binária. Os princípios da lógica \textit{fuzzy} podem ser aplicados para modelar o processo de tomada de decisão humana, através da ferramenta de inferência de um sistema \textit{fuzzy} (CAMASTRA, 2015).   
+\begin{equation} \label{eq:rss}
+	RSS = e_1^2 + e_2^2 + ... + e_n^2
+\end{equation}
 
-Um sistema deste tipo deve conter um conjunto \textit{fuzzy}, que define valores linguísticos para descrever as variáveis de entrada. Após esse processo, chamado de “fuzzificação”, as variáveis podem ser utilizadas nas regras \textit{fuzzy}, que são utilizadas pelo sistema para inferir uma saída com base nas entradas. 
+Em que $e_1^2$, $e_2^2$, ..., $e_n^2$ correspondem à diferença entre o valor previsto pelo modelo e o valor real para as $n$ amostras. 
 
-As regras \textit{fuzzy} possuem o formato \textit{if-then}, em que o antecedente da regra, localizado entre \textit{if} e \textit{then}, consiste em suposições dos valores das variáveis, estando combinadas pelos operadores AND e OR. O consequente da regra, situado após o then, define a saída que o sistema inferirá de acordo com o antecedente da regra.
+\subsubsection{\textit{Random Forest}}
+
+A \textit{Random Forest} consiste em uma técnica \textit{ensemble} não linear, em que uma variável qualitativa ou quantitativa é determinada através de uma combinação de modelos de árvores de decisão (FRIEDMAN; HASTIE; TIBSHIRANI, 2001). A relação entre as variáveis de entrada e a de saída é modelada através de um conjunto de regras de decisão, construídas por divisões binárias e recursivas dos dados de treinamento. Cada regra de decisão utiliza uma única variável de entrada para a divisão dos dados, sendo ela selecionada a partir de um subconjunto aleatório de todas as variáveis. Um modelo de regressão é então construído a partir das variáveis selecionadas e o erro RSS é calculado (HUTENGS; VOHLAND, 2016). As regras de decisão e consequentemente as variáveis de entrada, são selecionadas visando a minimização desse erro. Assim, a \textit{Random Forest} permite a determinação das variáveis mais significativas para a predição da variável de saída. 
+
+O valor previsto resultante será a média dos resultados obtidos para cada árvore de decisão. Para evitar a correlação entre as árvores, elas são construídas a partir de subconjuntos não disjuntos dos dados de entrada, o que torna o modelo resultante mais estável, robusto e preciso (BREIMAN, 2001).
+
+\subsection{Avaliação do desempenho de modelos}
+
+Para a avaliação da capacidade preditiva dos modelos, é comumente utilizada a estratégia de validação cruzada k-\textit{fold} (k-\textit{fold cross validation}). Ela é empregada para assegurar que não há um sobreajuste (\textit{overfitting}) no modelo, através da divisão do conjunto de dados em k subconjuntos disjuntos, com uma alocação das amostras para o conjunto de treinamento ou teste (DA SILVA; PERES; BOSCARIOLI, 2017). Assim, um dos subconjuntos é utilizado como teste e os k-1 demais para o treinamento, de forma que o modelo realize a predição para dados desconhecidos. Este procedimento é repetido k vezes, alterando os subconjuntos a cada vez.
+
+As predições resultantes podem então ser avaliadas através de métricas, tais como o coeficiente de correlação e RMSE, empregadas nos artigos em que a regressão foi realizada. Estes indicadores medem, respectivamente, o grau de dependência entre as variáveis de entrada e saída e a magnitude média dos erros estimados (ALVES; VECCHIA, 2011), conforme as equações abaixo:
+
+\begin{equation} \label{eq:r}
+	R = \frac{\sum_{i=1}^n (x_i - \overline{x})(y_i - \overline{y})}{\sqrt{\sum_{i=1}^n(x_i - \overline{x})^2} \sqrt{\sum_{i=1}^n (y_i - \overline{y})^2}}
+\end{equation}
+
+\begin{equation} \label{eq:rmse}
+	RMSE = \sqrt{\frac{1}{n} \sum_{i=1}^n (y_i - \hat{y}_i)^2}
+\end{equation}
+
+Em que $x_i$ é o valor da variável de entrada, $\overline{x}$ é a média dos valores de $x$, $y_i$ é o valor real da variável de saída, $\overline{y}$ é a média dos valores de $y$, $n$ é o número de amostras e $\hat{y}_i$ é o valor previsto para a variável de saída.
+
+% \subsubsection{Sistema de inferência \textit{fuzzy}}
+
+% A lógica \textit{fuzzy} foi criada para atender a necessidade de se trabalhar com informações vagas ou incertas, o que não poderia ser feito através da lógica clássica, em que as informações são representadas de forma binária. Os princípios da lógica \textit{fuzzy} podem ser aplicados para modelar o processo de tomada de decisão humana, através da ferramenta de inferência de um sistema \textit{fuzzy} (CAMASTRA, 2015).   
+
+% Um sistema deste tipo deve conter um conjunto \textit{fuzzy}, que define valores linguísticos para descrever as variáveis de entrada. Após esse processo, chamado de “fuzzificação”, as variáveis podem ser utilizadas nas regras \textit{fuzzy}, que são utilizadas pelo sistema para inferir uma saída com base nas entradas. 
+
+% As regras \textit{fuzzy} possuem o formato \textit{if-then}, em que o antecedente da regra, localizado entre \textit{if} e \textit{then}, consiste em suposições dos valores das variáveis, estando combinadas pelos operadores AND e OR. O consequente da regra, situado após o then, define a saída que o sistema inferirá de acordo com o antecedente da regra.
 
 \section{Trabalhos relacionados}
 
