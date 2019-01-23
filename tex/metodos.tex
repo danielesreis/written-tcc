@@ -32,13 +32,13 @@ Os valores reais de SST serão obtidos segundo o procedimento do Instituto Adolf
 
 \section{Pré-processamento das imagens}
 
-Foram testadas diferentes configurações das técnicas de pré-processamento, visando a menor quantidade de ruído possível nas imagens. Apesar de as fotos terem sido tiradas em um ambiente controlado, as imagens resultantes variaram quanto ao ruído nelas contido, devido ao acúmulo de sujeira na câmara com o passar das semanas do experimento. Sendo assim, as configurações das técnicas variaram de acordo com as imagens.
+Foram testadas diferentes configurações das técnicas de pré-processamento, visando a menor quantidade de ruído possível nas mesmas. Apesar de as fotos terem sido tiradas em um ambiente controlado, as imagens resultantes variaram quanto ao ruído nelas contido, devido ao acúmulo de sujeira na câmara com o passar das semanas do experimento. Sendo assim, as configurações das técnicas variaram para cada imagem.
 
 A primeira técnica utilizada foi o filtro da mediana, de forma que as pequenas manchas contidas nas imagens fossem removidas. O tamanho de janela que garantiu uma melhor remoção de ruído na maioria das imagens foi de 11x11 pixels. A figura \ref{img:pre_med} mostra o efeito da utilização do filtro da mediana em uma imagem ruidosa.
 
-Como pode-se notar pela figura \ref{img:pre_med}, pequenos pontos permaneceram após a filtragem. Eles poderiam ser removidos com um tamanho de janela maior, mas isto implicaria também em uma perda de detalhes da manga. Assim, foi utilizada a operação de abertura, que utiliza a morfologia para remover pequenos pontos da imagem (Figura \ref{img:pre_ope}).
+Como pode-se notar pela figura \ref{img:pre_med}, pequenos pontos permaneceram após a filtragem. Eles poderiam ser removidos com um tamanho de janela maior, mas isto implicaria também em uma perda de detalhes da manga. Assim, foi utilizada a operação de abertura, que utiliza a morfologia para remover pequenos pontos de uma imagem (Figura \ref{img:pre_ope}).
 
-Após uniformizar a cor do fundo das imagens, foi possível realizar a segmentação pelo algoritmo de Otsu, de forma que as mangas fossem isoladas (Figura \ref{img:pre_otsu}). Entretanto, o algoritmo não foi capaz de remover as sombras contidas na imagem. Assim, utilizou-se a limiarização simples, visto que a intensidade das sombras era, em geral, visivelmente menor que a intensidade das mangas. 
+Após uniformizar a cor do fundo das imagens, foi possível realizar a segmentação pelo algoritmo de Otsu, de forma que as mangas fossem isoladas (Figura \ref{img:pre_otsu}). Entretanto, o algoritmo não foi capaz de remover as sombras presentes. Assim, utilizou-se a limiarização simples, visto que a intensidade das sombras era, em geral, visivelmente menor que a intensidade das mangas. 
 
 \section{Construção dos modelos}
 
