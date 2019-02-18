@@ -146,7 +146,7 @@ O objetivo da segmentação consiste em dividir a imagem em subconjuntos disjunt
 
 \subsubsection{Limiarização}
 
-A limiarização é o método de segmentação mais simples, rápido e pouco custoso existente. Ela é utilizada em imagens em que os objetos nela presentes possuem uma absorção de luz uniforme ao longo de suas superfícies, de forma que, a partir de um valor limiar, ou \textit{threshold}, é possível fazer a separação completa dos objetos da imagem (\textcolor{red}{SONKA; HLAVAC; BOYLE, 2008}).
+A limiarização é o método de segmentação mais simples, rápido e pouco custoso existente. Ela é utilizada em imagens em que os objetos nela presentes possuem uma absorção de luz uniforme ao longo de suas superfícies, de forma que, a partir de um valor limiar, ou \textit{threshold}, é possível fazer a separação completa dos objetos da imagem (SONKA; HLAVAC; BOYLE, 2008).
 
 Assim, dada uma imagem $f(i, j)$, obtém-se uma imagem segmentada $g(i, j)$ conforme a equação abaixo, considerando um \textit{threshold} T dado:
 
@@ -167,52 +167,44 @@ Na Figura \ref{img:thresholding} é mostrado o resultado da limiarização simpl
     \legend{\textbf{Fonte: } (OpenCV, 2003).}
 \end{figure}
 
-% Assim, se uma imagem conter objetos com intensidades contrastantes, é possível realizar a limiarização. Para exemplificar, é mostrado na figura \ref{img:blns} uma imagem, sua versão em escala de cinza e seu histograma. 
-
-% \begin{figure}[!htb]
-% \centering
-%     \caption{\label{img:blns} Imagem original, em escala de cinza e seu histograma.}
-%     \subcaptionbox{Imagem original}{\includegraphics[scale=0.15]{img/balloons}}\qquad
-%     \subcaptionbox{Escala de cinza}{\includegraphics[scale=0.15]{img/gray_balloons}}\qquad
-%     \subcaptionbox{Histograma da imagem em escala de cinza}{\includegraphics[scale=0.12]{img/hist}}
-%     \legend{(\textbf{Fonte: } Autor, 2019).}
-% \end{figure}
-
-% Nota-se uma maior concentração de pixels com intensidades mais baixas, que correspondem às partes escuras da imagem. A figura \ref{img:thr_blns} mostra o resultado da limiarização utilizando um \textit{threshold} muito baixo, alto e o ideal para separação total entre os balões e o plano de fundo.
-
 \subsubsection{Segmentação de Otsu}
 
-Esta técnica de segmentação é eficaz para imagens bimodais, cujos histogramas possuem dois picos. Este método calcula um limiar ótimo que se localiza aproximadamente no meio dos dois picos (GONZALEZ; WOODS, 2009). O algoritmo de Otsu busca maximizar a variância entre classes. 
+Esta técnica de segmentação é eficaz para imagens bimodais, cujos histogramas possuem dois picos. Este método calcula um limiar ótimo que se localiza aproximadamente no meio dos dois picos (GONZALEZ; WOODS, 2009). O algoritmo de Otsu busca um \textit{threshold} t tal que a variância entre uma mesma classe é minimizada. No contexto de uma imagem, uma classe seria o objeto de estudo ou o plano de fundo. A função a ser minimizada é dada por:
 
-\subsection{Contornos}
+\begin{equation} \label{eq:otsu}
+	\sigma_w^2(t) = q_1(t)\sigma_1^2(t) + q_2(t)\sigma_2^2(t)
+\end{equation}
+
+Em que $q_1(t)$ e $q_2(t)$ são as probabilidades das classes associadas ao limiar t, dadas por:
+
+\begin{equation}
+	q_1(t) = \sum_{i=1}^t{P(i)} \;\;\;\;\;\; q_2(t) = \sum_{i=t+1}^I{P(i)}
+\end{equation}
+
+Em que $P(i)$ é o histograma da imagem, tratado como função de densidade de probabilidade, e I é o nível máximo de intensidade da imagem. $\sigma_1^2(t)$ e $\sigma_2^2(t)$ são as variâncias das classes, dadas por:
+
+\begin{equation}
+	\sigma_1^2(t) = \sum_{i=1}^t{[i-\mu_1(t)]^2\frac{P(i)}{q_i(t)}} \;\;\;\; \sigma_2^2(t) = \sum_{i=t+1}^I{[i-\mu_1(t)]^2\frac{P(i)}{q_2(t)}}
+\end{equation}
+
+Em que:
+
+\begin{equation}
+	\mu_1(t) = \sum_{i=1}^t{i\frac{P(i)}{q_i(t)}} \;\;\;\; \mu_2(t) = \sum_{i=t+1}^I{i\frac{P(i)}{q_2(t)}}
+\end{equation}
+
+Na Figura \ref{fig:otsu} é mostrada uma imagem original e o resultado da segmentação de Otsu.
+
+\begin{figure}[H]
+\centering
+    \caption{\label{fig:otsu} Segmentação de Otsu. À esquerda, a imagem original. À direita, a imagem segmentada pelo algoritmo de Otsu}
+    \includegraphics[scale=0.5]{img/otsu.png}
+    \legend{\textbf{Fonte: } (Mathworks Inc., 2006).}
+\end{figure}
 
 \subsection{Técnicas de inferência}
 
 As técnicas aqui apresentadas são empregadas para a predição de uma variável de saída desejada com base nas variáveis de entrada fornecidas, através de modelos supervisionados de regressão ou classificação, em que a variável de saída é quantitativa ou qualitativa, respectivamente (DA SILVA; PERES; BOSCARIOLI, 2017). Para tal, deve-se utilizar um conjunto de amostras de treinamento, em que as variáveis de entrada e saída são conhecidas, para a construção de um modelo matemático que extraia padrões a partir dos dados fornecidos. Assim, tendo modelado o relacionamento entre as variáveis, pode-se realizar a predição para novas amostras, em que sua variável de saída é desconhecida (GAMA, 2015).
-
-% \subsubsection{Rede neural artificial}
-
-% Uma rede neural artificial (RNA) é uma máquina projetada para modelar a maneira como um cérebro realiza uma tarefa particular (HAYKIN, 2001), e é empregada em problemas de regressão e classificação. A RNA possui uma arquitetura paralela e não linear, o que é alcançado através de neurônios artificiais (Figura \ref{img:rna}), que simulam os neurônios reais. Os neurônios artificiais são as unidades de processamento da rede e repassam informações através das conexões entre si, semelhantemente às sinapses no cérebro humano. 
-
-% \imagem{0.15}{rna}{Estrutura de um neurônio artificial}{(HAYKIN, 2001).}
-
-% Os neurônios artificiais são organizados nas camadas de entrada, escondidas ou de saída. Inicialmente os dados de treinamento são fornecidos aos neurônios da camada de entrada e logo após eles são ponderados pelos pesos sinápticos dos neurônios das camadas escondidas. Nos neurônios da camada de saída, é aplicada a função de ativação sobre a soma dos dados provenientes dos neurônios da camada escondida, de forma a limitar o intervalo da amplitude da saída. Dentre as funções de ativação existentes estão disponíveis a função sigmoide, degrau, linear, entre outras.
-
-% Para a construção de uma rede neural, aplica-se um algoritmo de treinamento, onde se tenta inicialmente prever uma saída de acordo com os dados fornecidos. O erro de previsão é calculado e, a partir deste, os pesos sinápticos são ajustados. Esse processo é repetido para os dados de treinamento até que o critério de parada predefinido seja cumprido. 
-
-% \subsubsection{Máquina de vetores de suporte}
-
-% A máquina de vetores de suporte (SVM, \textit{Support Vector Machine}) é um algoritmo supervisionado utilizado para classificação. Ela constrói hiperplanos em um espaço multidimensional, buscando um hiperplano tal que haja uma melhor separação das classes, através da minimização da função objetivo por programação quadrática. A margem ótima é escolhida de acordo com sua distância até os pontos mais próximos, que se localizam nas fronteiras das classes e são chamados de vetores de suporte. Prioriza-se o hiperplano em que essa distância é a maior dentre os demais.
-
-% Uma das características mais úteis das SVMs é a possibilidade de classificação de dados que não são linearmente separáveis. Para isso são utilizadas funções \textit{kernel}, que mapeiam os dados de entrada para um plano de dimensão maior, para que a margem seja traçada entre as classes. Existem diferentes funções \textit{kernel}, como a linear, função de base radial (RBF, \textit{Radial Base Function}), sigmóide e polinomial. 
-
-% \subsubsection{Máquina de vetores de suporte por mínimos quadrados}
-
-% As máquinas de vetores de suporte por mínimos quadrados (LS-SVM, \textit{Least-Squares Support Vector Machine}) são reformulações da técnica SVM. A minimização da função objetivo é feita através de sistemas lineares KKT (Karush-Kuhn-Tucker), o que exige um tempo computacional menor que a técnica predecessora, sem perda na qualidade das soluções (ABREU, 2016). 
-
-% \subsubsection{Análise discriminante múltipla}
-
-% A análise discriminante é empregada quando o atributo alvo é categórico e as variáveis de entrada são quantitativas. Quando o atributo alvo possui mais de dois valores possíveis, tem-se a análise discriminante múltipla (MDA, \textit{Multiple Discriminant Analysis}). O principal objetivo da MDA é identificar as variáveis que melhor discriminam as classes, e, para isto, são construídas funções discriminantes, que consistem em combinações lineares das variáveis de entrada. Este objetivo é alcançado através da maximização da variância entre os subgrupos de variáveis em relação à variância dentro de um mesmo grupo (MIHALOVIC, 2016). 
 
 \subsubsection{Regressão linear múltipla}
 
@@ -253,14 +245,6 @@ As predições resultantes podem então ser avaliadas através de métricas, tai
 \end{equation}
 
 Em que $x_i$ é o valor da variável de entrada, $\overline{x}$ é a média dos valores de $x$, $y_i$ é o valor real da variável de saída, $\overline{y}$ é a média dos valores de $y$, $n$ é o número de amostras e $\hat{y}_i$ é o valor previsto para a variável de saída.
-
-% \subsubsection{Sistema de inferência \textit{fuzzy}}
-
-% A lógica \textit{fuzzy} foi criada para atender a necessidade de se trabalhar com informações vagas ou incertas, o que não poderia ser feito através da lógica clássica, em que as informações são representadas de forma binária. Os princípios da lógica \textit{fuzzy} podem ser aplicados para modelar o processo de tomada de decisão humana, através da ferramenta de inferência de um sistema \textit{fuzzy} (CAMASTRA, 2015).   
-
-% Um sistema deste tipo deve conter um conjunto \textit{fuzzy}, que define valores linguísticos para descrever as variáveis de entrada. Após esse processo, chamado de “fuzzificação”, as variáveis podem ser utilizadas nas regras \textit{fuzzy}, que são utilizadas pelo sistema para inferir uma saída com base nas entradas. 
-
-% As regras \textit{fuzzy} possuem o formato \textit{if-then}, em que o antecedente da regra, localizado entre \textit{if} e \textit{then}, consiste em suposições dos valores das variáveis, estando combinadas pelos operadores AND e OR. O consequente da regra, situado após o then, define a saída que o sistema inferirá de acordo com o antecedente da regra.
 
 \section{Trabalhos relacionados}
 
@@ -397,7 +381,7 @@ As mangas foram colocadas em uma caixa de madeira compensada, cujo interior poss
 
 Os autores notaram que os melhores resultados obtidos foram aqueles que empregaram o espaço de cores RGB para determinação da acidez titulável e firmeza, não informando os resultados obtidos para os demais atributos físico-químicos. Assim, para a acidez, obtiveram-se os coeficientes 0,917, 0,948, 0,915 e 0,977 para R, G, B e L* respectivamente e 0,924 e 0,948 para R+G e R+G+B. Para a firmeza, os coeficientes de correlação obtidos foram 0,899, 0,941, 0,933 e 0,968 para R, G, B e L* respectivamente e 0,906 e 0,948 para R+G e R+G+B. Os resultados obtidos para firmeza foram ligeiramente inferiores aos encontrados por Domingo et al. (2013), que determinou a firmeza em mamões, alcançando os coeficientes de correlação 0,9387 e 0,9497 para as funções binária e ternária em RGB, respectivamente. 	
 
-\subsection{\textcolor{red}{Síntese dos trabalhos estudados}}
+\subsection{Síntese dos trabalhos estudados}
 
 A seguir são sumarizadas as variáveis de entrada e saída, técnicas e métricas empregadas pelos autores.
 
