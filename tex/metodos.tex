@@ -3,100 +3,81 @@
 %--------------------------------------------------------------------------------------
 \chapter{Materiais e Métodos} \label{ch:MM} %Uma label é como você referencia uma seção no texto com a tag \ref{}
 
-\textcolor{red}{Design do método! (Marconi, Gil, Cervo) c/ diagrama}
-\textcolor{red}{Tecnologia utilizada e mais... (verifique correção de jorge)}
+O presente trabalho consiste em uma pesquisa do tipo quantitativa, por empregar procedimentos estruturados de coleta e análise de dados para descrição de um fenômeno e quantificação de resultados (FONSECA, 2002); quanto à sua natureza, ela é do tipo aplicada, devido aos resultados obtidos poderem ser utilizados para uma aplicação prática; quanto aos objetivos, é uma pesquisa explicativa, devido à busca pelos fatores determinantes para a ocorrência de um fenômeno (GIL, 2007) e, por fim, experimental quanto aos procedimentos adotados. 
 
-Dentre os dez artigos estudados, o atributo SST foi determinado em apenas três deles. O melhor resultado foi obtido para um modelo simplificado de regressão linear, em que as mangas foram divididas em três classes de acordo com o nível de SST, enquanto que para os demais modelos os resultados foram medianos ou ruins ao empregar no máximo três variáveis de entrada. Assim, nota-se uma carência de um modelo robusto e generalista para predição de SST. Desta forma, o estudo será conduzido de forma a investigar quais atributos visuais da manga mais se relacionam a esse atributo de qualidade, para que um bom modelo preditivo seja obtido.
+Dentre os dez artigos estudados, o atributo SST foi determinado em apenas três deles. O melhor resultado foi obtido para um modelo simplificado de regressão linear, em que as mangas foram divididas em três classes de acordo com o nível de SST, enquanto que para os demais modelos os resultados foram medianos ou ruins ao empregar no máximo três variáveis de entrada. Assim, nota-se uma carência de um modelo robusto e generalista para predição de SST. Desta forma, o estudo foi conduzido de forma a investigar quais atributos visuais da manga mais se relacionam a esse atributo de qualidade, para que um bom modelo preditivo seja obtido.
 
-Os atributos a serem extraídos das imagens das mangas serão todos aqueles empregados nos dez artigos, listados na Tabela \ref{tab:artigos_att}. Estes atributos, juntamente dos valores reais de SST para cada manga, serão utilizados para a construção de modelos preditivos. As técnicas de inferência empregadas serão a Regressão linear e \textit{Random Forest}. Através da Regressão linear será verificada se há uma relação linear entre cada variável de entrada e a de saída, assim como foi realizado pelos autores que determinaram SST em seus trabalhos. Ademais, na técnica Random Forest todas as variáveis de entrada serão utilizadas em um mesmo modelo, e por meio deste serão determinadas as variáveis mais significativas para a predição de SST em mangas. 
+Os atributos a serem extraídos das imagens das mangas foram todos aqueles empregados nos dez artigos, listados na Tabela \ref{tab:artigos_att}. Estes atributos, juntamente dos valores reais de SST para cada manga, foram utilizados para a construção de modelos preditivos. As técnicas de inferência empregadas foram a Regressão linear e \textit{Random Forest}. Através da Regressão linear foi verificada se há uma relação linear as variáveis de entrada e a de saída, assim como foi realizado pelos autores que determinaram SST em seus trabalhos. Ademais, na técnica Random Forest todas as variáveis de entrada foram utilizadas em um mesmo modelo, e por meio deste serão determinadas as variáveis mais significativas para a predição de SST em mangas. 
+
+O diagrama representando as etapas do estudo é mostrado na Figura \ref{fig:diag}.
+
+\begin{figure}[H]
+\centering
+    \caption{Etapas do estudo, desde a coleta das frutas até a validação dos modelos.}\label{fig:diag}
+    \includegraphics[scale=0.5]{img/diag.png}
+    \legend{\textbf{Fonte:} (Autor, 2019).}
+\end{figure}
 
 \section{Descrição das amostras}
 
-As mangas a serem utilizadas no estudo são das variedades ‘Palmer’ e ‘Tommy Atkins’, sendo duas das variedades mais produzidas no Vale do São Francisco (EMBRAPA SEMIÁRIDO, 2010). A variedade Palmer é caracterizada por frutos aromáticos e grandes, com peso de até 900 g, tom esverdeado ou arroxeado quando estão imaturos e cor vermelha quando maduros. Por outro lado, os frutos da variedade Tommy Atkins possuem um peso de aproximadamente 500 g e possuem uma coloração alaranjada, amarelada, avermelhada ou púrpura (NETO, 2009). 
+As mangas utilizadas no estudo foram das variedades ‘Palmer’ e ‘Tommy Atkins’, sendo duas das variedades mais produzidas no Vale do São Francisco (EMBRAPA SEMIÁRIDO, 2010). A variedade Palmer é caracterizada por frutos aromáticos e grandes, com peso de até 900 g, tom esverdeado ou arroxeado quando estão imaturos e cor vermelha quando maduros. Por outro lado, os frutos da variedade Tommy Atkins possuem um peso de aproximadamente 500 g e possuem uma coloração alaranjada, amarelada, avermelhada ou púrpura (NETO, 2009). 
 
-As amostras serão coletadas de pomares comerciais da Fazenda SpecialFruit Importação e Exportação Ltda. em Petrolina e Juazeiro. Serão marcadas trinta plantas distribuídas em cinco fileiras de plantio de um lote do pomar. A cada quinze dias serão colhidos manualmente 60 frutos (dois de cada planta), para cada variedade, iniciando-se dos 35 dias após a floração até o ponto de colheita comercial adotado pela Fazenda. \textcolor{red}{As mangas ficarão armazenadas para a aquisição das imagens também na pós-colheita. (Como se deu essa parceria?)}
+As amostras foram coletadas de pomares comerciais da Fazenda SpecialFruit Importação e Exportação Ltda. em Petrolina e Juazeiro. Foram marcadas trinta plantas distribuídas em cinco fileiras de plantio de um lote do pomar. A cada quinze dias foram colhidos manualmente 60 frutos (dois de cada planta), para cada variedade, iniciando-se dos 35 dias após a floração\footnote{\label{ftnote:floracao} Etapa reprodutiva em que ocorre a diferenciação do meristema vegetativo para o floral, originando os componentes da flor (pétalas, estames e pistilo) (DUARTE FILHO et al., 1999).} até o ponto de colheita comercial adotado pela Fazenda, visando a construção de um modelo robusto de predição, onde mangas de diferentes estádios de maturação fossem utilizadas. \textcolor{red}{Ademais, as mangas foram armazenadas para a aquisição das imagens também na pós-colheita, com 10 e 20 dias após ela. (Como se deu essa parceria?)}
 
 \section{Aquisição das imagens}
 
-As imagens das mangas serão obtidas para cada lado da fruta, que serão colocadas em uma caixa de madeira compensada com um orifício no topo (Figura \ref{img:caixa}), onde será posicionada uma câmera de 18 MP. O interior da caixa é preto fosco e contém uma superfíci enão reflexiva para o apoio das mangas. Na parte superior serão dispostos \textcolor{red}{3 LEDs brancos} para a iluminação das amostras. \textcolor{red}{(Origem do equipamento)}
+As imagens das mangas foram obtidas para cada lado da fruta, que foram colocadas em uma caixa de madeira compensada com um orifício no topo (Figura \ref{img:caixa}), onde foi posicionada uma câmera de 18 MP. O interior da caixa é preto fosco e contém uma superfície não reflexiva para o apoio das mangas. Na parte superior foram dispostos 3 LEDs brancos para a iluminação das amostras. O equipamento foi utilizado devido a uma parceria com o Laboratório de Energia na Agricultura (LENA) da UNIVASF.
 
-\imagem{0.1}{caixa}{Câmara para aquisição das imagens.}{(Autor, 2019).}
+\begin{figure}[H]
+\centering
+	\caption{Câmara para aquisição das imagens.}
+	\includegraphics[scale=0.1]{img/caixa.jpg}
+	\legend{\textbf{Fonte:} (Autor, 2019).}
+\end{figure}
 
-\textcolor{red}{Foram tiradas fotos de 1080 mangas, sendo destas 480 da variedade ‘Tommy Atkins’ e 600 da ‘Palmer’. Os dois lados de cada amostra foram fotografados, de forma que no total obtiveram-se 2160 imagens.} 
+Foram tiradas fotos de 1230 mangas, sendo destas 480 da variedade ‘Tommy Atkins’ e 750 da ‘Palmer’. Como os dois lados de cada amostra foram fotografados, no total obtiveram-se 2460 imagens.
 
-\textcolor{red}{A aquisição foi realizada de 15 em 15 dias para cada variedade, de forma que fossem obtidas imagens das mangas em diferentes estádios de maturação. Para a variedade ‘Tommy Atkins’, foram fotografadas 60 amostras por vez nas 7 primeiras coletas e 30 amostras nas 2 coletas subsequentes. A aquisição para a variedade ‘Palmer’ iniciou-se 1 semana após a da ‘Tommy Atkins’, com 60 amostras sendo fotografadas por  vez em 8 coletas e 30 amostras em 4 coletas subsequentes. A Figura \ref{img:caixa} exibe uma foto tirada para cada variedade.}
+A aquisição foi realizada nos mesmos dias de coleta das frutas. Para a variedade ‘Tommy Atkins’, foram fotografadas 420 frutas até a data da colheita e 60 após ela. Para a 'Palmer', foram fotografadas 600 mangas até o dia da colheita e 150 após ela. A Figura \ref{img:palmer_tommy} exibe uma foto tirada para cada variedade.
+
+\begin{figure}[!htb]
+\centering
+    \caption{\label{img:palmer_tommy} Fotos obtidas para cada variedade (a) Palmer (b) Tommy Atkins.}
+    \subcaptionbox{(a)}{\includegraphics[scale=0.109]{img/palmer}}
+    \subcaptionbox{(b)}{\includegraphics[scale=0.039]{img/tommy}}
+    \legend{\textbf{Fonte: } (Autor, 2019).}
+\end{figure}
 
 \section{Obtenção dos valores de referência}
 
-Os valores reais de SST serão obtidos segundo o procedimento do Instituto Adolfo Lutz (2008), sendo também adotado por Yahaya et al. (2015). Nele, as mangas têm inicialmente sua polpa homogeneizada e filtrada por uma centrífuga. O suco extraído é colocado em um refratômetro digital (HI 96804, Hanna Instruments, USA) para a quantificação de SST em ºBrix.
+Os valores reais de SST foram obtidos segundo o procedimento do Instituto Adolfo Lutz (2008), sendo também adotado por Yahaya et al. (2015). Nele, as mangas têm inicialmente sua polpa homogeneizada e filtrada por uma centrífuga. O suco extraído é colocado em um refratômetro digital (HI 96804, Hanna Instruments, USA) para a quantificação de SST em ºBrix.
 
 \section{Pré-processamento das imagens}
 
-Foram testadas diferentes configurações das técnicas de pré-processamento, visando a menor quantidade de ruído possível nas mesmas. Apesar de as fotos terem sido tiradas em um ambiente controlado, as imagens resultantes variaram quanto ao ruído nelas contido, devido ao acúmulo de sujeira na câmara com o passar das semanas do experimento. Sendo assim, as configurações das técnicas variaram para cada imagem.
+Como as imagens obtidas possuíam ruído e informações irrelevantes, foi necessário realizar o pré-processamento das mesmas. Foram testadas diferentes configurações de algoritmos, de forma a remover a maior quantidade possível de ruído sem perda de informações relevantes da imagem. Apesar de as fotos terem sido tiradas em um ambiente controlado, as imagens resultantes variaram quanto ao ruído nelas contido, devido ao acúmulo de sujeira na câmara com o passar das semanas do experimento. Sendo assim, as configurações das técnicas variaram para cada imagem.
 
-A primeira técnica utilizada foi o filtro da mediana, de forma que as pequenas manchas contidas nas imagens fossem removidas. O tamanho de janela que garantiu uma melhor remoção de ruído na maioria das imagens foi de 11x11 pixels. A figura \ref{img:pre_med} mostra o efeito da utilização do filtro da mediana em uma imagem ruidosa.
+A primeira técnica aplicada foi o filtro da mediana, visando a remoção de manchas contidas nas imagens. O tamanho de janela que garantiu uma melhor remoção de ruído na maioria das imagens foi de 11x11 pixels. Após isso, as imagens foram segmentadas através do algoritmo de Otsu, de forma que as mangas fossem isoladas do fundo. Com isso, notou-se nas imagens a presença de pequenos pontos que não foram removidos pelo filtro da mediana. Apesar de a remoção dos mesmos ter sido possível com uma segunda filtragem pela mediana, notou-se uma perda de detalhes na manga. Sendo assim, optou-se por empregar a operação de abertura, operação morfólogica através da qual pequenos pontos de uma imagem podem ser removidos. 
 
-Como pode-se notar pela figura \ref{img:pre_med}, pequenos pontos permaneceram após a filtragem. Eles poderiam ser removidos com um tamanho de janela maior, mas isto implicaria também em uma perda de detalhes da manga. Assim, foi utilizada a operação de abertura, que utiliza a morfologia para remover pequenos pontos de uma imagem (Figura \ref{img:pre_ope}).
+A utilização destas técnicas não garantiu uma remoção completa das sombras contidas na imagem. Assim, utilizou-se a limiarização simples para este fim, visto que a intensidade dos pixels correspondentes às sombras era, em geral, visivelmente menor que a intensidade dos pixels das mangas. Como a limiarização simples resultou na remoção de partes da manga, além das sombras delas, empregou-se a operação morfológica de fechamento para o preenchimento das mangas.
 
-Após uniformizar a cor do fundo das imagens, foi possível realizar a segmentação pelo algoritmo de Otsu, de forma que as mangas fossem isoladas (Figura \ref{img:pre_otsu}). Entretanto, o algoritmo não foi capaz de remover as sombras presentes. Assim, utilizou-se a limiarização simples, visto que a intensidade das sombras era, em geral, visivelmente menor que a intensidade das mangas. 
+Por fim, foram traçados os contornos das mangas, visando a remoção de partes da imagem que não continham a fruta. A Figura \ref{fig:prep} mostra uma imagem original e pré-processada.
+
+\begin{figure}[!htb]
+\centering
+    \caption{\label{fig:prep_tommy} Antes e depois do pré-processamento (a) Imagem original (b) Imagem resultante após utilização de técnicas de pré-processamento.}
+    \subcaptionbox{(a)}{\includegraphics[scale=0.035]{img/sem_processamento.JPG}}
+    \subcaptionbox{(b)}{\includegraphics[scale=0.062]{img/processada.JPG}}
+    \legend{\textbf{Fonte: } (Autor, 2019).}
+\end{figure}
+
+Posteriormente, as variáveis mencionadas na Tabela \ref{tab:artigos_att} foram extraídas para cada imagem. Todos os algoritmos de pré-processamento de imagens, assim como a extração de variáveis, foram realizados através da linguagem de programação Python, com o auxílio da biblioteca OpenCV.
 
 \section{Construção dos modelos}
 
-% \subsection{\textcolor{red}{Regressão Linear (Colocar na fundamentação?)}}
+Antes da construção dos modelos foi realizada uma reamostragem das imagens, devido ao desbalanceamento presente na base de dados. Como havia 600 imagens de mangas tiradas antes da colheita e apenas 240 imagens tiradas após ela, foi feita uma repetição das imagens deste período até que fosse obtida uma quantidade igual de imagens nos dois períodos.
 
-% A regressão linear consiste em uma técnica estatística utilizada para prever uma variável quantitativa com base em uma única variável de entrada. Ela é empregada quando o relacionamento entre $x$ e $y$ é presumidamente linear (JAMES et al., 2013), como mostra a Equação \ref{eq:rl1}:
-
-% \begin{equation} \label{eq:rl1}
-% 	Y = \beta_0 + \beta_1X + \epsilon
-% \end{equation}
-
-% Em que $Y$ é o vetor de variável de saída, $X$ é o vetor de variável de entrada, $\beta_0$ e $\beta_1$ são o intercepto e inclinação da reta respectivamente e $\epsilon$ é o erro aleatório.
-
-% Para que a estimação da variável de saída seja realizada, os parâmetros $\beta_0$ e $\beta_1$ devem inicialmente ser estimados, o que é feito normalmente pelo método de mínimos quadrados. Neste critério, busca-se minimizar a soma do quadrado dos resíduos (RSS – \textit{Residual Sum of Squares}), dada pela equação abaixo:
-
-% \begin{equation} \label{eq:rss}
-% 	RSS = e_1^2 + e_2^2 + ... + e_n^2
-% \end{equation}
-
-% Em que $e_1^2$, $e_2^2$, ..., $e_n^2$ correspondem à diferença entre o valor previsto pelo modelo e o valor real para as $n$ amostras. Dada a função a ser minimizada, as expressões de $\beta_0$ e $\beta_1$ são dadas por:
-
-% \begin{equation} \label{eq:rl2}
-% 	\beta_1 = \frac{\sum_{i=1}^n (x_i - \overline{x})(y_i - \overline{y})}{\sum_{i=1}^n(x_i - \overline{x})^2}
-% \end{equation}
-
-% \begin{equation} \label{eq:rl3}
-% 	\beta_0 = \overline{y} - \beta_1\overline{x}
-% \end{equation}
-
-% Em que $x$ corresponde ao valor da variável de entrada, $\overline{x}$ é a média dos valores de $x$, $y$ é o valor da variável de saída e $\overline{y}$ é a média dos valores de $y$.
-
-% \subsection{\textcolor{red}{\textit{Random Forest} (Colocar na fundamentação?)}}
-
-% A \textit{Random Forest} consiste em uma técnica \textit{ensemble} não linear, em que uma variável qualitativa ou quantitativa é determinada através de uma combinação de modelos de árvores de decisão (FRIEDMAN; HASTIE; TIBSHIRANI, 2001). A relação entre as variáveis de entrada e a de saída é modelada através de um conjunto de regras de decisão, construídas por divisões binárias e recursivas dos dados de treinamento. Cada regra de decisão utiliza uma única variável de entrada para a divisão dos dados, sendo ela selecionada a partir de um subconjunto aleatório de todas as variáveis. Um modelo de regressão é então construído a partir das variáveis selecionadas e o erro RSS é calculado (HUTENGS; VOHLAND, 2016). As regras de decisão e consequentemente as variáveis de entrada, são selecionadas visando a minimização desse erro. Assim, a \textit{Random Forest} permite a determinação das variáveis mais significativas para a predição da variável de saída. 
-
-% O valor previsto resultante será a média dos resultados obtidos para cada árvore de decisão. Para evitar a correlação entre as árvores, elas são construídas a partir de subconjuntos não disjuntos dos dados de entrada, o que torna o modelo resultante mais estável, robusto e preciso (BREIMAN, 2001). 
-
-% \section{Avaliação de desempenho dos modelos}
-
-% Para a avaliação da capacidade preditiva dos modelos, será utilizada a estratégia de validação cruzada k-\textit{fold} (k-\textit{fold cross validation}). Ela é empregada para assegurar que não há um sobreajuste (\textit{overfitting}) no modelo, através da divisão do conjunto de dados em k subconjuntos disjuntos, com uma alocação das amostras para o conjunto de treinamento ou teste (DA SILVA; PERES; BOSCARIOLI, 2017). Assim, um dos subconjuntos será utilizado como teste e os k-1 demais para o treinamento, de forma que o modelo realize a predição para dados desconhecidos. Este procedimento é repetido k vezes, alterando os subconjuntos a cada vez.
-
-% As predições resultantes serão avaliadas através de um teste de hipóteses e das métricas de correlação e RMSE, empregadas nos artigos em que a regressão foi realizada. Estes indicadores medem, respectivamente, o grau de dependência entre as variáveis de entrada e saída e a magnitude média dos erros estimados (ALVES; VECCHIA, 2011), conforme as equações abaixo:
-
-% \begin{equation} \label{eq:r}
-% 	R = \frac{\sum_{i=1}^n (x_i - \overline{x})(y_i - \overline{y})}{\sqrt{\sum_{i=1}^n(x_i - \overline{x})^2} \sqrt{\sum_{i=1}^n (y_i - \overline{y})^2}}
-% \end{equation}
-
-% \begin{equation} \label{eq:rmse}
-% 	RMSE = \sqrt{\frac{1}{n} \sum_{i=1}^n (y_i - \hat{y}_i)^2}
-% \end{equation}
-
-% Em que $x_i$ é o valor da variável de entrada, $\overline{x}$ é a média dos valores de $x$, $y_i$ é o valor real da variável de saída, $\overline{y}$ é a média dos valores de $y$, $n$ é o número de amostras e $\hat{y}_i$ é o valor previsto para a variável de saída.
+Assim, foram treinadas Random Forests para cada subconjunto de variáveis definido na Tabela \ref{tab:artigos_att}, além do subconjunto que reúne todas as variáveis, para a determinação do SST. Além disso, também foram construídos modelos com Regressão linear, para comparação direta com os melhores modelos da literatura.
 
 % \subsection{Subseção de exemplo 1 - Referenciando seções} \label{subsec:subsec1}
-
-
-
-
 
 
 %--------------------------------------------------------------------------------------

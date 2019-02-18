@@ -5,7 +5,7 @@
 
 \section{\textit{Background}}
 
-Para um entendimento apropriado do estudo investigativo, serão discutidos aqui conceitos básicos do processamento digital de imagens, como espaços de cores, pré-processamento e técnicas de inferência para determinação de um atributo desejado. 
+Para um entendimento apropriado do estudo investigativo, são discutidos aqui conceitos básicos do processamento digital de imagens, como espaços de cores, pré-processamento e técnicas de inferência para determinação de um atributo desejado. 
 
 \subsection{Espaços de cores}
 
@@ -15,12 +15,12 @@ Um espaço de cores é um modelo matemático utilizado para a representação de
 
 Este modelo é baseado nas três cores primárias, a partir das quais ele é nomeado: vermelho (\textit{Red}), verde (\textit{Green}) e azul (\textit{Blue}). Ele é representado por um sistema de coordenadas 3D, em que cada cor é dada por um vetor que se origina na origem. Os três elementos do vetor consistem nas intensidades de cada cor primária, e assim, uma imagem RGB é representada por três matrizes, cada uma contendo as intensidades do respectivo canal (R, G, B) para todos os pixels da imagem. Quando as três cores são combinadas em suas intensidades máximas, o olho humano percebe a cor resultante como branca. Por outro lado, quando as três intensidades são nulas, tem-se a cor preta como resultante. No subespaço RGB, mostrado na Figura \ref{img:rgb_cube}, o segmento de reta que une as cores branca e preta consiste na escala de cinza, onde as intensidades dos três canais são iguais. Os demais vértices do cubo correspondem às cores primárias e secundárias (SONKA; HLAVAC; BOYLE, 2014).  
 
-\begin{figure}[!htb]
+\begin{figure}[H]
 \centering
     \caption{\label{img:rgb_cube} Subespaço de cores RGB.}
     \includegraphics[scale=0.09]{img/rgb_cube}
     \includegraphics[scale=0.15]{img/rgb_cube2}
-    \legend{(\textbf{Fonte: } GONZALEZ; WOODS, 2009; DATAR; JONES; SMITH JR., 2005).}
+    \legend{\textbf{Fonte: } (GONZALEZ; WOODS, 2009; DATAR; JONES; SMITH JR., 2005).}
 \end{figure}
 
 \subsubsection{L*a*b*}
@@ -75,7 +75,12 @@ O sistema HSV, também conhecido como HSB, possui como componentes a matiz (\tex
 
 A matiz é associada à cor dominante em uma mistura de cores, da forma como é percebida por um humano. Ela é descrita em graus, variando entre 0º e 360º, de acordo com sua localização na roda de cores, conforme a Figura \ref{img:hsv_hex}. A saturação mede o grau de diluição de uma cor pura por luz branca, sendo estimada de acordo com a distância da cor até a origem do cone, que representa a cor branca. Por fim, o valor ou brilho indica a quantidade de luz na combinação, sendo obtida a partir da distância da cor a partir do preto até o branco. Tanto a saturação quanto o valor/brilho possuem valores variando entre 0 e 1 (DORJ; LEE; YUN, 2017).
 
-\imagem{0.25}{hsv_hex}{Representação 3D do espaço de cores HSV.}{(Wikipedia, 2019).}
+\begin{figure}[H]
+\centering
+    \caption{\label{img:hsv_hex} Representação 3D do espaço de cores HSV.}
+    \includegraphics[scale=0.25]{img/hsv_hex}
+    \legend{\textbf{Fonte: } (Wikipedia, 2019).}
+\end{figure}
 
 Pode ser realizada a conversão de uma imagem no espaço de cores RGB para HSV, de forma a se obter uma melhor descrição da mesma, através das seguintes equações: 
 
@@ -104,17 +109,6 @@ Pode ser realizada a conversão de uma imagem no espaço de cores RGB para HSV, 
 
 A seguir estão descritas algumas das técnicas de pré-processamento mais comuns. Elas subdividem-se quanto ao domínio em que atuam, podendo ser realizadas no domínio espacial, em que as técnicas são aplicadas nos pixels diretamente, ou no domínio da frequência, em que os métodos são realizados no espectro de frequência da imagem (BEDI; KHANDELWAL, 2013). 
 
-% \subsubsection{Filtro \textit{deblurring}}
-
-% Uma imagem borrada é obtida quando a câmera que a fotografa ou o próprio objeto está em movimento. O ruído contido numa imagem borrada não é aditivo, ou seja, o pixel não é corrompido de forma independente da vizinhança (GONZALEZ; WOODS, 2009). Assim, a imagem borrada pode ser considerada como uma versão filtrada da imagem original, sendo representada conforme a Equação \ref{eq:dblr}.
-
-% \begin{equation} \label{eq:dblr}
-% 	g(x, y) = h(x, y)*f(x, y)+\eta(x, y)
-% \end{equation}
-
-% Em que $g(x, y)$ corresponde à imagem borrada, $h(x, y)$ à função de degradação da imagem, $f(x, y)$ à imagem original e $\eta(x, y)$ a um ruído aditivo. 
-% O propósito da filtragem \textit{deblurring} é “desfazer” a convolução entre a função de degradação e a imagem original, de forma a obter uma estimativa $f(x, y)$ da imagem sem borrão. Dentre as estratégias básicas de \textit{deblurring} estão o filtro de Wiener, filtro regularizado e algoritmo de Lucy-Richardson (YADAV; JAIN; CHUGH, 2016).
-
 \subsubsection{Filtro da mediana}
 
 A filtragem da mediana consiste em uma operação não linear realizada no domínio espacial. Através dela o ruído de uma imagem é removido enquanto as bordas são preservadas, pois ele não é tão sensível a valores extremos. Para realizar a filtragem, move-se uma janela de tamanho predefinido pixel a pixel, de forma que cada valor seja substituído pela mediana dos valores dos pixels contidos na janela (HEMALATHA; SUMATHI, 2016). Este filtro é comumente empregado para imagens com ruído do tipo \textit{salt and pepper}, que consiste em pixels aleatórios de cor branca ou preta, conforme mostra a Figura \ref{img:median_filter}.
@@ -123,21 +117,28 @@ A filtragem da mediana consiste em uma operação não linear realizada no domí
 
 \subsubsection{Operações de abertura e fechamento (\textit{Opening and closing operations})}
 
-Estas técnicas consistem em operações morfológicas baseadas nas operações de erosão e dilatação, que realiza o preenchimento de buracos nas imagens e elimina detalhes irrelevantes respectivamente. A abertura realiza a erosão seguida de dilatação, resultando na suavização do contorno de um objeto e eliminação de saliências finas. Por outro lado, a operação de fechamento primeiro aplica a dilatação e depois a erosão, contribuindo também para a suavização do contorno do objeto e para a eliminação de pequenos buracos e preenchimento de lacunas em um contorno (ARCO et al; 2015). A Figura \ref{img:morph_op} mostra as operações de abertura e fechamento realizadas na letra “j”. 
+As operações de abertura e fechamento são do tipo morfológicas, em que são realizadas transformações em uma imagem, normalmente binária, com base no formato do objeto nela contido. Elas se diferem quanto à ordem em que as operações de erosão e dilatação, também morfológicas, são realizadas em uma imagem.
 
-\imagem{0.5}{morph_op}{\textcolor{red}{Operações morfológicas realizadas na letra "j". (a) Imagem original, (b) Operação de abertura, (c) Operação de fechamento}}{(Documentação OpenCV; 2018).}
+Nestas duas operações, um \textit{kernel}, que consiste em uma janela de tamanho predefinido preenchida com 0s ou 1s, percorre a imagem original, substituindo o valor de um pixel caso os pixels contidos na janela sejam todos iguais a 1, no caso da erosão, ou pelo menos um deles seja igual a 1, no caso da dilatação. Na Figura \ref{img:eros_dilat} são mostrados os efeitos do uso da erosão e dilatação em uma mesma imagem.
 
-% \subsubsection{Aguçamento da imagem (\textit{Image sharpening})}
+\begin{figure}[H]
+\centering
+    \caption{\label{img:eros_dilat} Utilização da erosão e dilatação em uma imagem (a) Imagem original (b) Imagem erodida (c) Imagem dilatada.}
+    \subcaptionbox{}{\includegraphics[scale=0.6]{img/j.png}}
+    \subcaptionbox{}{\includegraphics[scale=0.6]{img/j_eros.png}}
+    \subcaptionbox{}{\includegraphics[scale=0.6]{img/j_dilat.png}}
+    \legend{\textbf{Fonte: } (OpenCV, 2019).}
+\end{figure}
 
-% O aguçamento é empregado visando o aumento de nitidez de uma imagem, para que as transições de intensidade sejam salientadas. Ele pode ser realizado através da diferenciação no domínio espacial, de forma que bordas e outras descontinuidades são realçadas e áreas com intensidades variando de forma suave são atenuadas. Dentre as técnicas comumente usadas há o laplaciano, gradiente e \textit{Unsharp Masking} (PRAVEEN; 2016). A Figura \ref{img:image_sharpening} demonstra o aguçamento por \textit{Unsharp Masking}.
+A operação de abertura realiza a erosão seguida de dilatação, resultando na eliminação de ruídos pontuais enquanto mantém as formas do objeto. Por outro lado, a operação de fechamento primeiro aplica a dilatação e depois a erosão, o que, além de também manter o contorno do objeto, contribui para o preenchimento de pequenos buracos (ARCO et al; 2015). A Figura \ref{img:morph_op} mostra o resultado da utilização destas operações. 
 
-% \begin{figure}[!htb]
-% \centering
-%     \caption{\label{img:image_sharpening} Aguçamento através de \textit{Unsharp Masking}.}
-%     \subcaptionbox{Imagem original}{\includegraphics[scale=0.45]{img/unsharp1}}\qquad
-%     \subcaptionbox{Imagem açugada}{\includegraphics[scale=0.45]{img/unsharp2}}
-%     \legend{(\textbf{Fonte: } MathWorks Inc, 2016).}
-% \end{figure}
+\begin{figure}[H]
+\centering
+    \caption{\label{img:morph_op} Operações morfológicas aplciadas na letra "j" (a) Abertura (b) Fechamento.}
+    \subcaptionbox{}{\includegraphics[scale=0.6]{img/opening.png}}
+    \subcaptionbox{}{\includegraphics[scale=0.6]{img/closing.png}}
+    \legend{\textbf{Fonte: } (OpenCV, 2019).}
+\end{figure}
 
 \subsection{Segmentação de imagens}
 
@@ -147,7 +148,7 @@ O objetivo da segmentação consiste em dividir a imagem em subconjuntos disjunt
 
 A limiarização é o método de segmentação mais simples, rápido e pouco custoso existente. Ela é utilizada em imagens em que os objetos nela presentes possuem uma absorção de luz uniforme ao longo de suas superfícies, de forma que, a partir de um valor limiar, ou \textit{threshold}, é possível fazer a separação completa dos objetos da imagem (\textcolor{red}{SONKA; HLAVAC; BOYLE, 2008}).
 
-Assim, dada uma imagem $f(i, j)$, estando representada em escala de cinza, obtém-se uma imagem segmentada $g(i, j)$ conforme a equação abaixo, considerando um \textit{threshold} T dado:
+Assim, dada uma imagem $f(i, j)$, obtém-se uma imagem segmentada $g(i, j)$ conforme a equação abaixo, considerando um \textit{threshold} T dado:
 
 \begin{equation} \label{eq:thrd}
 	g(i, j) =
@@ -156,6 +157,15 @@ Assim, dada uma imagem $f(i, j)$, estando representada em escala de cinza, obté
 			0, & se \ f(i, j) < T
 		\end{cases}
 \end{equation}
+
+Na Figura \ref{img:thresholding} é mostrado o resultado da limiarização simples aplicada numa imagem gradiente em escala de cinza. Como esta imagem é representada em 8 bits e seus valores de intensidade  variam entre 0 e 255 ($2^8$), ao utilizar um limiar igual a 127, a imagem resultante consiste em duas metades cujos pixels são iguais a 0 e 1. 
+
+\begin{figure}[H]
+\centering
+    \caption{\label{img:thresholding} Limiarização simples aplicada em uma imagem, com \textit{threshold} igual a 127. À esquerda, a imagem gradiente, cuja intensidade varia entre 0 e 255. À direita, o resultado da limiarização.}
+    \includegraphics[scale=0.5]{img/thresholding.png}
+    \legend{\textbf{Fonte: } (OpenCV, 2003).}
+\end{figure}
 
 % Assim, se uma imagem conter objetos com intensidades contrastantes, é possível realizar a limiarização. Para exemplificar, é mostrado na figura \ref{img:blns} uma imagem, sua versão em escala de cinza e seu histograma. 
 
@@ -176,7 +186,7 @@ Esta técnica de segmentação é eficaz para imagens bimodais, cujos histograma
 
 \subsection{Contornos}
 
-\subsection{\textcolor{red}{Técnicas de inferência (Jorge comentou "verificar se todas as técnicas serão usadas")}}
+\subsection{Técnicas de inferência}
 
 As técnicas aqui apresentadas são empregadas para a predição de uma variável de saída desejada com base nas variáveis de entrada fornecidas, através de modelos supervisionados de regressão ou classificação, em que a variável de saída é quantitativa ou qualitativa, respectivamente (DA SILVA; PERES; BOSCARIOLI, 2017). Para tal, deve-se utilizar um conjunto de amostras de treinamento, em que as variáveis de entrada e saída são conhecidas, para a construção de um modelo matemático que extraia padrões a partir dos dados fornecidos. Assim, tendo modelado o relacionamento entre as variáveis, pode-se realizar a predição para novas amostras, em que sua variável de saída é desconhecida (GAMA, 2015).
 
@@ -254,7 +264,7 @@ Em que $x_i$ é o valor da variável de entrada, $\overline{x}$ é a média dos 
 
 \section{Trabalhos relacionados}
 
-A seguir são discutidos dez artigos \textit{(Apêndice A)} em que é empregado o processamento digital de imagens para determinação de atributos de qualidade em mangas. O estudo investigativo será conduzido de acordo com as técnicas e métricas empregadas pelos autores, assim como os atributos extraídos das imagens das mangas. 
+A seguir são discutidos dez artigos \textit{(Apêndice A)} em que é empregado o processamento digital de imagens para determinação de atributos de qualidade em mangas. O estudo investigativo foi conduzido de acordo com as técnicas e métricas empregadas pelos autores, assim como os atributos extraídos das imagens das mangas. 
 
 Teoh e Syaifudin (2007) propuseram em seu trabalho a determinação do peso de mangas da variedade Chokanan\footnote{\label{ftnote:chokanan}Variedade originária da Tailândia, caracterizada por frutos compridos com pontas cônicas, polpa sem fibra, pele grossa e alta resistência a doenças.} através de imagens obtidas por uma câmera digital. 100 amostras aleatórias de mangas maduras e verdes foram coletadas e divididas entre treinamento e teste (50 para cada conjunto). Os valores reais do peso das mangas foram obtidos por uma balança digital. As mangas foram inicialmente imersas em água e limpas usando uma esponja e, após isso, foram postas em uma superfície preta e tiveram suas imagens tiradas por uma câmera de 0.3m mm/pixel de resolução, que foi situada a 22 cm acima do fruto, com uma fonte de luz de cada lado do aparelho. 
 
@@ -266,7 +276,7 @@ Para o pré-processamento das imagens, inicialmente empregou-se o filtro da medi
     \subcaptionbox{Imagem original}{\includegraphics[scale=0.38]{img/art11}}
     \subcaptionbox{Imagem filtrada}{\includegraphics[scale=0.39]{img/art12}}
     \subcaptionbox{Imagem segmentada}{\includegraphics[scale=0.4]{img/art13}}
-    \legend{(\textbf{Fonte: } TEOH; SYAIFUDIN, 2007).}
+    \legend{\textbf{Fonte: } (TEOH; SYAIFUDIN, 2007).}
 \end{figure}
 
 No estudo de Nandi, Tudu e Koley (2014), mangas de diferentes variedades foram separadas quanto aos dias restantes até o apodrecimento das mesmas. Foram obtidas 1350 amostras de cinco diferentes variedades e provenientes de três pomares, coletadas em três lotes com um intervalo de uma semana entre eles, sendo que em cada lote havia 90 mangas de cada variedade. As mangas foram utilizadas como entrada no sistema automatizado até o dia do apodrecimento delas, resultando em 16400 imagens. Em cada dia, três especialistas determinaram os dias restantes até a data de expiração. As imagens tiradas foram divididas em quatro grupos quanto aos dias restantes até que a respectiva manga apodrecesse (12 dias restantes, 9 até 12 dias, 5 até 8 dias e 1 até 4 dias).
@@ -376,7 +386,7 @@ As imagens obtidas foram convertidas para escala de cinza, tiveram seu tamanho r
 			\hline
 		\end{tabular}
 	\end{table}
-	\fonte{(PANDEY; GAMIT; NAIK, 2014).}
+	\legend{\textbf{Fonte: } (PANDEY; GAMIT; NAIK, 2014).}
 \end{center}
 
 Com o sistema de inferência \textit{fuzzy}, os autores obtiveram uma acurácia média igual a 93,33\% na classificação quanto à saúde da manga e 91,41\% na classificação da categoria dela.
@@ -394,7 +404,7 @@ A seguir são sumarizadas as variáveis de entrada e saída, técnicas e métric
 \begin{center}
 	\begin{table}[!htb]
 	\tiny
-	\caption{\label{tab:artigos_obj} Atributos-alvo determinados pelos autores. \textcolor{red}{(Jorge interligou as colunas de SST e maturação, Acácio quer que troque “pelos autores” por “pela maturação da manga”)}}
+	\caption{\label{tab:artigos_obj} Atributos-alvo determinados pelos autores.}
 		\begin{tabular}{>{\centering}p{3.6cm} cccccccc}
 			\hline
 			Autores/Atributos-alvo					& Peso & Maturação & Apodrecimento & Tamanho & SST & Acidez & Firmeza & Doença \\ \hline
@@ -411,7 +421,7 @@ A seguir são sumarizadas as variáveis de entrada e saída, técnicas e métric
 			\hline
 		\end{tabular}
 	\end{table}
-	\fonte{(Autor, 2019).}
+	\legend{\textbf{Fonte: } (Autor, 2019).}
 \end{center}
 
 Nota-se que na maioria dos artigos é feita a classificação ao invés da regressão, devido ao fato de os atributos qualitativos previstos serem facilmente determinados através de uma inspeção visual. Isto é comprovado pelos bons resultados encontrados pelos autores, enquanto que nos artigos em que o atributo alvo é quantitativo, as métricas obtidas foram inferiores.
@@ -437,7 +447,7 @@ Nota-se que na maioria dos artigos é feita a classificação ao invés da regre
 			\hline
 		\end{tabular}
 	\end{table}
-	\fonte{(Autor, 2019).}
+	\legend{\textbf{Fonte: } (Autor, 2019).}
 \end{center}
 
 O pré-processamento das imagens foi realizado em poucos trabalhos, visto que na maioria deles a aquisição das imagens foi realizada sob boas condições. Neste estudo investigativo essas quatro técnicas serão testadas, para verificação se há uma melhora na capacidade preditiva do modelo. 
@@ -465,7 +475,7 @@ Percebe-se uma grande variedade de atributos empregados pelos autores, mas com u
 			\hline
 		\end{tabular}
 	\end{table}
-	\fonte{(Autor, 2019).}
+	\legend{\textbf{Fonte: } (Autor, 2019).}
 \end{center}
 
 Para os problemas de classificação, é visível o emprego de diferentes técnicas para a predição de atributos. Por outro lado, os autores que realizaram regressão em seus trabalhos optaram por técnicas menos sofisticadas, a Regressão linear e MLR, supondo uma relação linear entre as variáveis de entrada e saída. 
@@ -491,7 +501,7 @@ As métricas empregadas pelos autores serão também empregadas neste estudo inv
 			\hline
 		\end{tabular}
 	\end{table}
-	\fonte{(Autor, 2019).}
+	\legend{\textbf{Fonte: } (Autor, 2019).}
 \end{center}
 
 %\begin{figure}[!htb]
