@@ -5,7 +5,7 @@
 
 O presente trabalho consiste em uma pesquisa do tipo quantitativa, por empregar procedimentos estruturados de coleta e análise de dados para descrição de um fenômeno e quantificação de resultados (FONSECA, 2002); quanto à sua natureza, ela é do tipo aplicada, devido aos resultados obtidos poderem ser utilizados para uma aplicação prática; quanto aos objetivos, é uma pesquisa explicativa, devido à busca pelos fatores determinantes para a ocorrência de um fenômeno (GIL, 2007) e, por fim, experimental quanto aos procedimentos adotados. 
 
-Dentre os dez artigos estudados, o atributo SST foi determinado em apenas três deles. O melhor resultado foi obtido para um modelo simplificado de regressão linear, em que as mangas foram divididas em três classes de acordo com o nível de SST, enquanto que para os demais modelos os resultados foram medianos ou ruins ao empregar no máximo três variáveis de entrada. Assim, nota-se uma carência de um modelo robusto e generalista para predição de SST. Desta forma, o estudo foi conduzido de forma a investigar quais atributos visuais da manga mais se relacionam a esse atributo de qualidade, para que um bom modelo preditivo seja obtido.
+Dentre os dez artigos estudados, o atributo SST foi determinado em apenas três deles. O melhor resultado foi obtido para um modelo simplificado de regressão linear, em que apenas uma variável foi utilizada, enquanto que para os demais modelos os resultados foram medianos ou ruins ao empregar no máximo três variáveis de entrada. Assim, nota-se uma carência de um modelo robusto e generalista para predição de SST. Desta forma, o estudo foi conduzido de forma a investigar quais atributos visuais da manga mais se relacionam a esse atributo de qualidade, para que um bom modelo preditivo seja obtido.
 
 Os atributos a serem extraídos das imagens das mangas foram todos aqueles empregados nos dez artigos, listados na Tabela \ref{tab:artigos_att}. Estes atributos, juntamente dos valores reais de SST para cada manga, foram utilizados para a construção de modelos preditivos. As técnicas de inferência empregadas foram a Regressão linear e \textit{Random Forest}. Através da Regressão linear foi verificada se há uma relação linear as variáveis de entrada e a de saída, assim como foi realizado pelos autores que determinaram SST em seus trabalhos. Ademais, na técnica Random Forest todas as variáveis de entrada foram utilizadas em um mesmo modelo, e por meio deste serão determinadas as variáveis mais significativas para a predição de SST em mangas. 
 
@@ -26,11 +26,11 @@ As amostras foram coletadas de pomares comerciais da Fazenda SpecialFruit Import
 
 \section{Aquisição das imagens}
 
-As imagens das mangas foram obtidas para cada lado da fruta, que foram colocadas em uma caixa de madeira compensada com um orifício no topo (Figura \ref{img:caixa}), onde foi posicionada uma câmera de 18 MP. O interior da caixa é preto fosco e contém uma superfície não reflexiva para o apoio das mangas. Na parte superior foram dispostos 3 LEDs brancos para a iluminação das amostras. O equipamento foi utilizado devido a uma parceria com o Laboratório de Energia na Agricultura (LENA) da UNIVASF.
+As imagens das mangas foram obtidas para cada lado da fruta, que foram colocadas em uma caixa de madeira compensada com um orifício no topo (Figura \ref{img:caixa}), onde foi posicionada uma câmera de 18 MP. O interior da caixa é preto fosco e contém uma superfície não reflexiva para o apoio das mangas. Na parte superior foram dispostos 3 LEDs brancos para a iluminação das amostras. O equipamento foi obtido a partir de uma parceria com o Laboratório de Energia na Agricultura (LENA) da UNIVASF.
 
 \begin{figure}[H]
 \centering
-	\caption{Câmara para aquisição das imagens.}
+	\caption{Câmara para aquisição das imagens.}\label{img:caixa}
 	\includegraphics[scale=0.1]{img/caixa.jpg}
 	\legend{\textbf{Fonte:} (Autor, 2019).}
 \end{figure}
@@ -39,11 +39,11 @@ Foram tiradas fotos de 1230 mangas, sendo destas 480 da variedade ‘Tommy Atkin
 
 A aquisição foi realizada nos mesmos dias de coleta das frutas. Para a variedade ‘Tommy Atkins’, foram fotografadas 420 frutas até a data da colheita e 60 após ela. Para a 'Palmer', foram fotografadas 600 mangas até o dia da colheita e 150 após ela. A Figura \ref{img:palmer_tommy} exibe uma foto tirada para cada variedade.
 
-\begin{figure}[!htb]
+\begin{figure}[H]
 \centering
     \caption{\label{img:palmer_tommy} Fotos obtidas para cada variedade (a) Palmer (b) Tommy Atkins.}
-    \subcaptionbox{(a)}{\includegraphics[scale=0.109]{img/palmer}}
-    \subcaptionbox{(b)}{\includegraphics[scale=0.039]{img/tommy}}
+    \subcaptionbox{}{\includegraphics[scale=0.109]{img/palmer}}
+    \subcaptionbox{}{\includegraphics[scale=0.039]{img/tommy}}
     \legend{\textbf{Fonte: } (Autor, 2019).}
 \end{figure}
 
@@ -53,19 +53,19 @@ Os valores reais de SST foram obtidos segundo o procedimento do Instituto Adolfo
 
 \section{Pré-processamento das imagens}
 
-Como as imagens obtidas possuíam ruído e informações irrelevantes, foi necessário realizar o pré-processamento das mesmas. Foram testadas diferentes configurações de algoritmos, de forma a remover a maior quantidade possível de ruído sem perda de informações relevantes da imagem. Apesar de as fotos terem sido tiradas em um ambiente controlado, as imagens resultantes variaram quanto ao ruído nelas contido, devido ao acúmulo de sujeira na câmara com o passar das semanas do experimento. Sendo assim, as configurações das técnicas variaram para cada imagem.
+Como as imagens obtidas possuíam ruído e informações irrelevantes, foi necessário realizar o pré-processamento das mesmas. Foram testadas diferentes configurações de algoritmos, de forma a remover a maior quantidade possível de ruído sem perda de informações importantes da imagem. Apesar de as fotos terem sido tiradas em um ambiente controlado, as imagens resultantes variaram quanto ao ruído nelas contido, devido ao acúmulo de sujeira na câmara com o passar das semanas do experimento. Sendo assim, as configurações das técnicas variaram para cada imagem.
 
-A primeira técnica aplicada foi o filtro da mediana, visando a remoção de manchas contidas nas imagens. O tamanho de janela que garantiu uma melhor remoção de ruído na maioria das imagens foi de 11x11 pixels. Após isso, as imagens foram segmentadas através do algoritmo de Otsu, de forma que as mangas fossem isoladas do fundo. Com isso, notou-se nas imagens a presença de pequenos pontos que não foram removidos pelo filtro da mediana. Apesar de a remoção dos mesmos ter sido possível com uma segunda filtragem pela mediana, notou-se uma perda de detalhes na manga. Sendo assim, optou-se por empregar a operação de abertura, operação morfólogica através da qual pequenos pontos de uma imagem podem ser removidos. 
+A primeira técnica aplicada foi o filtro da mediana, visando a remoção de manchas contidas nas imagens. O tamanho de janela que garantiu uma melhor remoção de ruído na maioria das imagens foi de 11x11 pixels. Após isso, as imagens foram segmentadas através do algoritmo de Otsu, de forma que as mangas fossem isoladas do fundo. Com isso, notou-se nas imagens a presença de pequenos pontos que não foram removidos pelo filtro da mediana. Apesar de a remoção dos mesmos ter sido possível com uma segunda filtragem pela mediana, notou-se uma perda de detalhes na manga. Sendo assim, optou-se por empregar a operação de abertura, através da qual pequenos pontos da imagem foram removidos, ao empregar um \textit{kernel} variando entre 15x15 e 105x105 pixels. 
 
-A utilização destas técnicas não garantiu uma remoção completa das sombras contidas na imagem. Assim, utilizou-se a limiarização simples para este fim, visto que a intensidade dos pixels correspondentes às sombras era, em geral, visivelmente menor que a intensidade dos pixels das mangas. Como a limiarização simples resultou na remoção de partes da manga, além das sombras delas, empregou-se a operação morfológica de fechamento para o preenchimento das mangas.
+A utilização destas técnicas não garantiu uma remoção completa das sombras contidas na imagem. Assim, utilizou-se a limiarização simples para este fim, visto que a intensidade dos pixels correspondentes às sombras era, em geral, visivelmente menor que a intensidade dos pixels das mangas. A configuração desta técnica que conferiu os melhores resultados possuiu um \textit{threshold} igual a 100, aplicado na imagem em escala de cinza. Como a limiarização simples resultou na remoção de partes da manga, além das sombras delas, empregou-se a operação morfológica de fechamento para o preenchimento das mangas. O melhor tamanho do \textit{kernel} obtido foi de 13x13 pixels.
 
 Por fim, foram traçados os contornos das mangas, visando a remoção de partes da imagem que não continham a fruta. A Figura \ref{fig:prep} mostra uma imagem original e pré-processada.
 
 \begin{figure}[!htb]
 \centering
     \caption{\label{fig:prep} Antes e depois do pré-processamento (a) Imagem original (b) Imagem resultante após utilização de técnicas de pré-processamento.}
-    \subcaptionbox{(a)}{\includegraphics[scale=0.035]{img/sem_processamento.JPG}}
-    \subcaptionbox{(b)}{\includegraphics[scale=0.062]{img/processada.JPG}}
+    \subcaptionbox{}{\includegraphics[scale=0.035]{img/sem_processamento.JPG}}
+    \subcaptionbox{}{\includegraphics[scale=0.062]{img/processada.JPG}}
     \legend{\textbf{Fonte: } (Autor, 2019).}
 \end{figure}
 
@@ -75,7 +75,23 @@ Posteriormente, as variáveis mencionadas na Tabela \ref{tab:artigos_att} foram 
 
 Antes da construção dos modelos foi realizada uma reamostragem das imagens, devido ao desbalanceamento presente na base de dados. Como havia 600 imagens de mangas tiradas antes da colheita e apenas 240 imagens tiradas após ela, foi feita uma repetição das imagens deste período até que fosse obtida uma quantidade igual de imagens nos dois períodos.
 
-Assim, foram treinadas Random Forests para cada subconjunto de variáveis definido na Tabela \ref{tab:artigos_att}, além do subconjunto que reúne todas as variáveis, para a determinação do SST. Além disso, também foram construídos modelos com Regressão linear, para comparação direta com os melhores modelos da literatura.
+Assim, foram treinadas Random Forests para cada subconjunto de variáveis obtidos a partir da literatura, além do subconjunto que reúne todas as variáveis, para a determinação do SST. Além disso, também foram construídos modelos com Regressão linear, para comparação direta com os melhores modelos da literatura. Na Tabela \ref{tbl:var_gps} são mostradas as variáveis para cada artigo investigado.
+
+\begin{longtable}{m{1cm} m{10cm} m{3.5cm}}
+\hline
+Id  & Variáveis                                                                                                                                    & Autores                             \\ \hline
+G1  & Média das intensidades dos pixels nos espaços RGB, \\ & HSV, L*a*b*                                                                               & Abarra et al. (2018)                \\ \hline
+G2  & Cor HSV dominante                                                                                                                            & Yossy (2017)                        \\ \hline
+G3  & Média das intensidades RGB na manga inteira, nas \\ &  regiões apex, equatorial e cume, diferença das \\ & médias e gradiente longitudinal     & Nandi, Tudu e Koley (2014)          \\ \hline
+G4  & Número de pixels correspondente à manga                                                                                                      & Teoh e Syaifudin (2007)             \\ \hline
+G5  & Média das intensidades dos pixels no espaço RGB                                                                                              & Yahaya et al. (2015)                \\ \hline
+G6  & Média das intensidades dos pixels no espaço L*a*b* \\ & e variáveis fractais 																 	& Zheng e Lu (2012)                   \\ \hline
+G7  & Média das intensidades dos pixels no espaço HSV                                                                                              & Khairunniza-Bejo e Kamarudin (2011) \\ \hline
+G8  & Média das intensidades dos pixels nos espaços HSV \\ & e L*a*b*                                                                                   & Vélez-Rivera et al. (2014)          \\ \hline
+G9  & Média das intensidades dos pixels nos espaços RGB \\ & e HSV e taxas R/G, R/B e S/H                                                              & Salunkhe e Patil (2015)             \\ \hline
+G10 & Média das intensidades dos pixels no canal b*, \\ & número de pixels e diâmetro                                                                   & Pandey, Gamit e Naik (2014) \\ \hline       
+\caption{Subconjuntos de variáveis obtidos a partir da literatura.}\label{tbl:var_gps}
+\end{longtable} 
 
 % \subsection{Subseção de exemplo 1 - Referenciando seções} \label{subsec:subsec1}
 
