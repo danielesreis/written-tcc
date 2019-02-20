@@ -1,10 +1,24 @@
 \chapter{Resultados} \label{ch:RD}
 
-No trabalho de Khairunniza-Bejo e Kamarudin (2011), o atributo SST foi previsto em mangas 'Chokanan' a partir do espaço de cores HSV. Os autores construíram modelos de Regressão Linear Simples para cada canal deste espaço de cor, e obtiveram como melhor resultado um coeficiente de correlação igual a -0,92 para o canal Hue. Assim, para as mangas da variedade 'Palmer', também foi construída uma Regressão linear com o atributo Hue como entrada. Entretanto, esperava-se um resultado inferior aos obtidos pelos autores, visto que, para as mangas 'Palmer', o atributo Hue não varia linearmente. A Figura \ref{fig:hue_sst} mostra a variação do SST de acordo com o Hue. 
+A estatística descritiva do atributo SST é mostrada na Tabela \ref{tbl:sst_stat}, onde nota-se uma grande variabilidade nos dados. Dessa forma, é possível construir um modelo robusto capaz de realizar a predição deste atributo para diferentes estádios de maturação da manga.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{llllllll}
+\hline
+Dados     & Amostras & M\'edia & M\'in & M\'ax & Amplitude & SD & Vari\^ancia   \\
+\hline
+SST     & 1200 & 9,83 &  3,8 &  19,7 &  15,9 &  4,5 &  20,24 \\
+\hline
+\end{tabular}
+\caption{Estatística descritivas dos valores de referência de SST.} \label{tbl:sst_stat}
+\end{table}
+
+Inicialmente os modelos construídos na literatura foram replicados para as mangas 'Palmer', para a comparação dos resultados. No trabalho de Khairunniza-Bejo e Kamarudin (2011), o atributo SST foi previsto em mangas 'Chokanan' a partir do espaço de cores HSV. Os autores construíram modelos de Regressão Linear Simples para cada canal deste espaço de cor, e obtiveram como melhor resultado um coeficiente de correlação igual a -0,92 para o canal matiz. Assim, para as mangas da variedade 'Palmer', também foi construída uma Regressão linear com o atributo matiz como entrada. Entretanto, esperava-se um resultado inferior aos obtidos pelos autores, visto que, para as mangas 'Palmer', o atributo matiz não varia linearmente. A Figura \ref{fig:hue_sst} mostra a variação do SST de acordo com a matiz. 
 
 \begin{figure}[H]
 \centering
-	\caption{Variação do SST conforme o Hue.}
+	\caption{Variação do SST conforme a matiz.}
 	\includegraphics[scale=0.18]{img/hue_sst_palmer.png}
 	\legend{\textbf{Fonte:} (Autor, 2019).}\label{fig:hue_sst}
 \end{figure}
@@ -13,25 +27,25 @@ Conforme esperado, o coeficiente de correlação obtido para a Regressão linear
 
 \begin{figure}[H]
 \centering
-    \caption{\label{fig:comp_hue} Modelos de Regressão linear construídos para o atributo Hue (a) Presente estudo (b) Trabalho de Khairunniza-Bejo e Kamarudin (2011).}
+    \caption{\label{fig:comp_hue} Modelos de Regressão linear construídos para o atributo matiz (a) Presente estudo (b) Trabalho de Khairunniza-Bejo e Kamarudin (2011).}
     \subcaptionbox{}{\includegraphics[scale=0.133]{img/scatter_sst_hue_palmer.png}}
     \subcaptionbox{}{\includegraphics[scale=0.36]{img/sst_lit_hue.png}}
     \legend{\textbf{Fonte: } (Autor, 2019).}
 \end{figure}
 
-Devido ao relacionamento não linear entre Hue e SST, esperava-se que com a \textit{Random Forest} fosse obtido um resultado superior. Os valores de $R$ e $RMSE$ obtidos por ela, assim como pela Regressão linear, são mostrados na Figura \ref{fig:fold_sst_hue}, para cada \textit{fold}.
+Devido ao relacionamento não linear entre a matiz e SST, esperava-se que com a \textit{Random Forest} fosse obtido um resultado superior. Os valores de $R$ e $RMSE$ obtidos por ela, assim como pela Regressão linear, são mostrados na Figura \ref{fig:fold_sst_hue}, para cada \textit{fold}.
 
 \begin{figure}[H]
 \centering
-	\caption{Métricas obtidas para cada fold, obtidos para as duas técnicas de inferência (a) Coeficiente de correlação (R) (b) RMSE.}
+	\caption{Métricas obtidas para cada \textit{fold}, obtidos para as duas técnicas de inferência (a) Coeficiente de correlação (R) (b) RMSE.}
 	\subcaptionbox{}{\includegraphics[scale=0.15]{img/fold_r_sst_hue_palmer.png}}
 	\subcaptionbox{}{\includegraphics[scale=0.15]{img/fold_rmse_sst_hue_palmer.png}}
 	\legend{\textbf{Fonte:} (Autor, 2019).}\label{fig:fold_sst_hue}
 \end{figure}
 
-Apesar de a \textit{Random Forest} ser claramente superior, como esperado, o resultado ainda não é razoável. Para as mangas da variedade 'Palmer', vê-se que este atributo não é suficiente para a determinação de SST como foi para as mangas da variedade 'Chokanan'.
+Apesar de a \textit{Random Forest} ser claramente superior, como esperado, o resultado ainda não é razoável. O coeficiente de correlação ainda mostra-se bastante abaixo que o obtido pelos autores Khairunniza-Bejo e Kamarudin (2011), enquanto que o RMSE é muito maior que o obtido por eles (0,033 ºBrix). Para as mangas da variedade 'Palmer', vê-se que este atributo não é suficiente para a determinação de SST como foi para as mangas da variedade 'Chokanan'.
 
-Por outro lado, os autores YAHAYA et al. (2015) testaram o espaço de cores RGB e obtiveram um coeficiente de correlação igual a 0,814 e RMSE igual a 1,218 ªBrix. Para verificar se existe uma relação linear entre as variáveis RGB extraídas das mangas 'Palmer' e o SST, foram plotadas as variações das mesmas, mostradas na Figura \ref{fig:rgb_sst}.
+Por outro lado, os autores Yahaya et al. (2015) testaram o espaço de cores RGB e obtiveram um coeficiente de correlação igual a 0,814 e RMSE igual a 1,218 ªBrix. Para verificar se existe uma relação linear entre as variáveis RGB extraídas das mangas 'Palmer' e o SST, foram plotadas as variações das mesmas, mostradas na Figura \ref{fig:rgb_sst}.
 
 \begin{figure}[H]
 \centering
@@ -42,19 +56,19 @@ Por outro lado, os autores YAHAYA et al. (2015) testaram o espaço de cores RGB 
     \legend{\textbf{Fonte: } (Autor, 2019).}
 \end{figure}
 
-Nota-se uma variação aproximadamente linear para as três variáveis. Assim, espera-se um resultado razoável para a Regressão Linear Múltipla. Na figura \ref{fig:fold_sst_rgb} são mostrados os valores de R e RMSE para a Regressão Linear e \textit{Random Forest} em todos os \textit{folds}.
+Nota-se um comportamento aproximadamente linear para as três variáveis. Assim, espera-se um resultado razoável para a Regressão Linear Múltipla, mas ainda melhor para a \textit{Random Forest}. Na Figura \ref{fig:fold_sst_rgb} são mostrados os valores de R e RMSE para a Regressão Linear e a técnica \textit{ensemble} em todos os \textit{folds}.
 
 \begin{figure}[H]
 \centering
-	\caption{Métricas obtidas para cada fold, obtidos para as duas técnicas de inferência (a) Coeficiente de correlação (R) (b) RMSE.}
+	\caption{Métricas obtidas para cada \textit{fold}, obtidos para as duas técnicas de inferência (a) Coeficiente de correlação (R) (b) RMSE.}
 	\subcaptionbox{}{\includegraphics[scale=0.15]{img/fold_r_sst_rgb_palmer.png}}
 	\subcaptionbox{}{\includegraphics[scale=0.15]{img/fold_rmse_sst_rgb_palmer.png}}
 	\legend{\textbf{Fonte:} (Autor, 2019).}\label{fig:fold_sst_rgb}
 \end{figure}
 
-Os valores médios dos coeficientes de correlação para a MLR e RF foram, respectivamente, iguais a 0,8312 e 0,9415. Ambos modelos mostraram-se superiores ao modelo construído por YAHAYA et al. (2015). Entretanto, o valor de RMSE obtido por eles ainda mostra-se menor que os alcançados para as mangas 'Palmer'. 
+Os valores médios dos coeficientes de correlação para a MLR e RF foram, respectivamente, iguais a 0,8312 e 0,9415. Ambas métricas mostraram-se superiores à obtida por Yahaya et al. (2015). Entretanto, o valor de RMSE obtido por eles ainda mostra-se menor que os alcançados para as mangas 'Palmer'. 
 
-Desta forma, para a obtenção de um modelo que seja melhor que os da literatura em todas as métricas, foi treinada uma \textit{Random Forest} com todas as variáveis listadas na Tabela \ref{tbl:var_gps}. Com um maior número de variáveis de entrada, há uma maior quantidade de informações associada à cada manga, aumentando-se assim a probabilidade de alcançar melhores resultados. Os valores de R e RMSE para cada \textit{fold} do modelo RF com todas as variáveis são mostrados na Tabela \ref{tbl:r_rmse_all}.
+Desta forma, para a obtenção de um modelo que melhor explique a variação de SST, foi treinada uma \textit{Random Forest} com todas as variáveis listadas na Tabela \ref{tbl:var_gps}. Com um maior número de variáveis de entrada, há uma maior quantidade de informações associada à cada manga, aumentando-se assim a probabilidade de alcançar melhores resultados. Os valores de R e RMSE para cada \textit{fold} do modelo RF com todas as variáveis são mostrados na Tabela \ref{tbl:r_rmse_all}.
 
 \begin{table}[H]
 	\centering
@@ -72,7 +86,28 @@ Desta forma, para a obtenção de um modelo que seja melhor que os da literatura
 	\legend{\textbf{Fonte: } (Autor, 2019).}
 \end{table}
 
-O coeficiente de correlação obtido foi maior que o encontrado pelos autores Khairunniza-Bejo e Kamarudin (2011) e YAHAYA et al. (2015), assim como o valor de RMSE foi menor que o obtido por estes.
+O coeficiente de correlação obtido foi maior que o encontrado pelos autores Khairunniza-Bejo e Kamarudin (2011) e Yahaya et al. (2015). Por outro lado, enquanto que o RMSE foi menor que o obtido por Yahaya et al. (2015), ainda foi maior que o RMSE encontrado por Khairunniza-Bejo e Kamarudin (2011) em seu trabalho.
+
+Os atributos mais importantes para a determinação de SST em mangas 'Palmer' podem ser obtidos a partir da propriedade \textit{feature\_importances\_} do \textit{Scikit-Learn}, que retorna um valor de 0 a 1 para cada variável de entrada no modelo. Quanto mais próximo de 1 for o valor, mais importante a respectiva variável foi para a construção das regras de decisão da \textit{Random Forest}. Na Figura \ref{fig:feat_import} são mostradas as variáveis mais importantes do modelo.
+
+\begin{figure}[H]
+\centering
+	\caption{Atributos mais importantes para a determinação de SST.}
+	\includegraphics[scale=0.18]{img/feat_import_sst_palmer.png}
+	\legend{\textbf{Fonte:} (Autor, 2019).}\label{fig:feat_import}
+\end{figure}
+
+Na Figura \ref{fig:var_atts} são mostradas as variações dos atributos mais significantes de acordo com o SST.
+
+\begin{figure}[H]
+\centering
+	\caption{Variação dos atributos mais importantes para o modelo (a) Taxa R/B (b) Dimensão de correlação (c) Média B na região equatorial (d) Média B na região da haste.}
+	\subcaptionbox{}{\includegraphics[scale=0.1]{img/RB_sst_palmer.png}}
+	\subcaptionbox{}{\includegraphics[scale=0.1]{img/cd_sst_palmer.png}}
+	\subcaptionbox{}{\includegraphics[scale=0.1]{img/equatorb_sst_palmer.png}}
+	\subcaptionbox{}{\includegraphics[scale=0.1]{img/stalkb_sst_palmer.png}}
+	\legend{\textbf{Fonte:} (Autor, 2019).}\label{fig:var_atts}
+\end{figure}
 
 % \section{Seção de exemplo 1 - Códigos} \label{sec:resex1}
 
