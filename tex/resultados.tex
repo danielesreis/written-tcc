@@ -73,20 +73,21 @@ Desta forma, para a obtenção de um modelo que melhor explique a variação de 
 \begin{table}[H]
 	\centering
 	\caption{\label{tbl:r_rmse_all} Valores de R e RMSE obtidos para o modelo \textit{Random Forest} com todas as variáveis.}
-	\begin{tabular}{lll}
+	\begin{tabular}{lllll}
 	\hline
-	Fold  & R      & RMSE   \\ \hline
-	1     & 0,9723 & 1,0018 \\ \hline
-	2     & 0,9405 & 1,0987 \\ \hline
-	3     & 0,9755 & 0,7075 \\ \hline
-	4     & 0,9634 & 0,9029 \\ \hline
-	5     & 0,9660 & 0,8104 \\ \hline
-	Média & 0,9789 & 0,9042	\\ \hline
+	\multirow{2}{*}{\textit{Fold}} & \multicolumn{2}{c}{\textit{Random Forest}} & \multicolumn{2}{c}{Regressão Linear} \\ \cline{2-5}
+	  	  & R      & RMSE    & R 	& RMSE\\ \hline
+	1     & 0,9723 & 1,0018 & 0.9263 & 1.61544 \\ \hline
+	2     & 0,9405 & 1,0987 & 0.9227 & 1.73668 \\ \hline
+	3     & 0,9755 & 0,7075 & 0.9219 & 1.75353 \\ \hline
+	4     & 0,9634 & 0,9029 & 0.9219 & 1.82808 \\ \hline
+	5     & 0,9660 & 0,8104 & 0.9064 & 1.85705 \\ \hline
+	Média & 0,9789 & 0,9042	& 0.9199 & 1.75816 \\ \hline
 	\end{tabular}
 	\legend{\textbf{Fonte: } (Autor, 2019).}
 \end{table}
 
-O coeficiente de correlação obtido foi maior que o encontrado pelos autores Khairunniza-Bejo e Kamarudin (2011) e Yahaya et al. (2015). Por outro lado, enquanto que o RMSE foi menor que o obtido por Yahaya et al. (2015), ainda foi maior que o RMSE encontrado por Khairunniza-Bejo e Kamarudin (2011) em seu trabalho.
+Nota-se mais uma vez que o modelo \textit{Random Forest} foi superior à Regressão Linear. O coeficiente de correlação obtido por ele foi maior que o encontrado pelos autores Khairunniza-Bejo e Kamarudin (2011) e Yahaya et al. (2015). Por outro lado, enquanto que o RMSE foi menor que o obtido por Yahaya et al. (2015), ainda foi maior que o RMSE encontrado por Khairunniza-Bejo e Kamarudin (2011) em seu trabalho.
 
 Os atributos mais importantes para a determinação de SST em mangas 'Palmer' podem ser obtidos a partir da propriedade \textit{feature\_importances\_} do \textit{Scikit-Learn}, que retorna um valor de 0 a 1 para cada variável de entrada no modelo. Quanto mais próximo de 1 for o valor, mais importante a respectiva variável foi para a construção das regras de decisão da \textit{Random Forest}. Na Figura \ref{fig:feat_import} são mostradas as variáveis mais importantes do modelo.
 
@@ -97,7 +98,25 @@ Os atributos mais importantes para a determinação de SST em mangas 'Palmer' po
 	\legend{\textbf{Fonte:} (Autor, 2019).}\label{fig:feat_import}
 \end{figure}
 
-Na Figura \ref{fig:var_atts} são mostradas as variações dos atributos mais significantes de acordo com o SST.
+Nota-se que o espaço de cores RGB, especialmente o canal B, foi o que mais possuiu relação com o SST. O atributo taxa R/B, que indica a razão entre o valor médio das intensidades no canal R e canal B, mostrou-se o mais significativo. A Figura \ref{fig:rbrate_fig} exibe uma foto em que as intensidades dos pixels originais foram convertidas para R/B. Nota-se, através dela, que a cor arroxeada/amarelada está fortemente associada aos sólidos solúveis totais.
+
+\begin{figure}[H]
+\centering
+	\caption{Representação de uma foto no canal R/B.}
+	\includegraphics[scale=0.05]{img/RB_rate_img.jpg}
+	\legend{\textbf{Fonte:} (Autor, 2019).}\label{fig:rbrate_fig}
+\end{figure}
+
+O atributo dimensão de correlação, o único dentre eles que não está associado à cor, estima o grau de desordem das intensidades dos pixels. Assim, o quão menos uniforme é a superfície da manga, maior a desordem. Ademais, os dois outros atributos são associados ao canal azul, em duas regiões específicas a manga. Na Figura \ref{fig:equator_stalk_b} são especificadas as regiões equatorial e da haste.
+
+\begin{figure}[H]
+\centering
+	\caption{Regiões equatorial e haste em uma manga representada no canal B.}
+	\includegraphics[scale=0.2]{img/B_img.jpg}
+	\legend{\textbf{Fonte:} (Autor, 2019).}\label{fig:equator_stalk_b}
+\end{figure}
+
+Para entender a relação destas variáveis com o SST, foram plotadas as variações delas de acordo com o atributo de qualidade estudado, conforme mostra a Figura \ref{fig:var_atts}.
 
 \begin{figure}[H]
 \centering
@@ -109,6 +128,9 @@ Na Figura \ref{fig:var_atts} são mostradas as variações dos atributos mais si
 	\legend{\textbf{Fonte:} (Autor, 2019).}\label{fig:var_atts}
 \end{figure}
 
+Para a primeira variável, percebe-se que seus valores mais baixos estão associados à mangas verdes, com baixo teor de SST. Com o aumento desse valor, aumenta-se gradativamente o SST, o que corresponde, na imagem, à uma diminuição dos tons amarelados e intensificação dos tons mais roxos. Para a dimensão de correlação, nota-se um comportamento pouco intuitivo e sem padrão, em que os valores de SST permanecem praticamente constantes para vários valores possíveis da dimensão de correlação. Nas outras duas variáveis, há uma diminuição perceptível do nível de SST enquanto a cor azul torna-se menos intensa nas respectivas regiões da manga.
+
+Os demais atributos extraídos apresentaram importâncias menores que 0,01 e foram desconsiderados na construção de um novo modelo de \textit{Random Forest}, em que apenas as quatro variáveis mais importantes foram consideradas. O novo modelo apresentou um coeficiente de correlação igual a 0,9752, bastante próximo ao obtido para todas as variáveis.
 % \section{Seção de exemplo 1 - Códigos} \label{sec:resex1}
 
 % \subsection{Subseção de exemplo 1 - Inserindo trechos de códigos}

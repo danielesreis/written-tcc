@@ -20,13 +20,13 @@ O diagrama representando as etapas do estudo é mostrado na Figura \ref{fig:diag
 
 \section{Descrição das amostras}
 
-As mangas utilizadas no estudo foram das variedades ‘Palmer’ e ‘Tommy Atkins’, sendo duas das variedades mais produzidas no Vale do São Francisco (EMBRAPA SEMIÁRIDO, 2010). A variedade Palmer é caracterizada por frutos aromáticos e grandes, com peso de até 900 g, tom esverdeado ou arroxeado quando estão imaturos e cor vermelha quando maduros. Por outro lado, os frutos da variedade Tommy Atkins possuem um peso de aproximadamente 500 g e possuem uma coloração alaranjada, amarelada, avermelhada ou púrpura (NETO, 2009). 
+As mangas utilizadas no estudo eram da variedade ‘Palmer’, sendo uma das variedades mais produzidas no Vale do São Francisco (EMBRAPA SEMIÁRIDO, 2010), sendo caracterizada por frutos aromáticos e grandes, com peso de até 900 g, tom esverdeado ou arroxeado quando estão imaturos e cor vermelha quando maduros. 
 
-As amostras foram coletadas de pomares comerciais da Fazenda SpecialFruit Importação e Exportação Ltda. em Petrolina e Juazeiro. Foram marcadas trinta plantas distribuídas em cinco fileiras de plantio de um lote do pomar. A cada quinze dias foram colhidos manualmente 60 frutos (dois de cada planta), para cada variedade, iniciando-se dos 35 dias após a floração\footnote{\label{ftnote:floracao} Etapa reprodutiva em que ocorre a diferenciação do meristema vegetativo para o floral, originando os componentes da flor (pétalas, estames e pistilo) (DUARTE FILHO et al., 1999).} até o ponto de colheita comercial adotado pela Fazenda, visando a construção de um modelo robusto de predição, onde mangas de diferentes estádios de maturação fossem utilizadas. \textcolor{red}{Ademais, as mangas foram armazenadas para a aquisição das imagens também na pós-colheita, com 10 e 20 dias após ela. (Como se deu essa parceria?)}
+As amostras foram coletadas de pomares comerciais da Fazenda SpecialFruit Importação e Exportação Ltda. em Petrolina e Juazeiro. Foram marcadas trinta plantas distribuídas em cinco fileiras de plantio de um lote do pomar. A cada quinze dias foram colhidos manualmente 60 frutos (dois de cada planta), para cada variedade, iniciando-se dos 35 dias após a floração\footnote{\label{ftnote:floracao} Etapa reprodutiva em que ocorre a diferenciação do meristema vegetativo para o floral, originando os componentes da flor (pétalas, estames e pistilo) (DUARTE FILHO et al., 1999).} até o ponto de colheita comercial adotado pela Fazenda, visando a construção de um modelo robusto de predição, onde mangas de diferentes estádios de maturação fossem utilizadas. As mangas foram colhidas num intervalo de 15 em 15 dias e, após a colheita, de 10 em 10 dias.
 
 \section{Aquisição das imagens}
 
-As imagens das mangas foram obtidas para cada lado da fruta, que foram colocadas em uma caixa de madeira compensada com um orifício no topo (Figura \ref{img:caixa}), onde foi posicionada uma câmera de 18 MP. O interior da caixa é preto fosco e contém uma superfície não reflexiva para o apoio das mangas. Na parte superior foram dispostos 3 LEDs brancos para a iluminação das amostras. O equipamento foi obtido a partir de uma parceria com o Laboratório de Energia na Agricultura (LENA) da UNIVASF.
+As imagens das mangas foram obtidas para cada lado da fruta no mesmo dia em que elas foram coletadas. Elas foram posicionadas em uma caixa de madeira compensada com um orifício no topo (Figura \ref{img:caixa}), onde foi posicionada uma câmera de 18 MP. O interior da caixa é preto fosco e contém uma superfície não reflexiva para o apoio das mangas. Na parte superior foram dispostos 3 LEDs brancos para a iluminação das amostras. O equipamento foi obtido a partir de uma parceria com o Laboratório de Energia na Agricultura (LENA) da UNIVASF. 
 
 \begin{figure}[H]
 \centering
@@ -35,15 +35,12 @@ As imagens das mangas foram obtidas para cada lado da fruta, que foram colocadas
 	\legend{\textbf{Fonte:} (Autor, 2019).}
 \end{figure}
 
-Foram tiradas fotos de 1230 mangas, sendo destas 480 da variedade ‘Tommy Atkins’ e 750 da ‘Palmer’. Como os dois lados de cada amostra foram fotografados, no total obtiveram-se 2460 imagens.
-
-A aquisição foi realizada nos mesmos dias de coleta das frutas. Para a variedade ‘Tommy Atkins’, foram fotografadas 420 frutas até a data da colheita e 60 após ela. Para a 'Palmer', foram fotografadas 600 mangas até o dia da colheita e 150 após ela. A Figura \ref{img:palmer_tommy} exibe uma foto tirada para cada variedade.
+Foram tiradas fotos de 750 mangas, e, como os dois lados de cada amostra foram fotografados, no total obtiveram-se 1500 imagens. Para a 'Palmer', foram fotografadas 600 mangas até o dia da colheita e 150 após ela. A Figura \ref{img:palmer_tommy} exibe uma das fotos da 'Palmer'.
 
 \begin{figure}[H]
 \centering
-    \caption{\label{img:palmer_tommy} Fotos obtidas para cada variedade (a) Palmer (b) Tommy Atkins.}
-    \subcaptionbox{}{\includegraphics[scale=0.109]{img/palmer}}
-    \subcaptionbox{}{\includegraphics[scale=0.039]{img/tommy}}
+    \caption{\label{img:palmer_tommy} Foto tirada da manga 'Palmer'.}
+    {\includegraphics[scale=0.16]{img/palmer}}
     \legend{\textbf{Fonte: } (Autor, 2019).}
 \end{figure}
 
@@ -75,21 +72,23 @@ Posteriormente, as variáveis mencionadas na Tabela \ref{tab:artigos_att} foram 
 
 Antes da construção dos modelos foi realizada uma reamostragem das imagens, devido ao desbalanceamento presente na base de dados. Como havia 600 imagens de mangas tiradas antes da colheita e apenas 240 imagens tiradas após ela, foi feita uma repetição das imagens deste período até que fosse obtida uma quantidade igual de imagens nos dois períodos.
 
-Assim, foram treinadas Random Forests para cada subconjunto de variáveis obtidos a partir da literatura, além do subconjunto que reúne todas as variáveis, para a determinação do SST. Além disso, também foram construídos modelos com Regressão linear, para comparação direta com os melhores modelos da literatura. Na Tabela \ref{tbl:var_gps} são mostradas as variáveis para cada artigo investigado.
+A construção dos modelos foi feita através da biblioteca \textit{Scikit-Learn}, assim como a validação e obtenção das métricas. Como foi utilizada a estratégia 5-\textit{fold cross-validation}, em cada uma das 5 iterações 240 amostras eram utilizadas para teste e as demais para treinamento do modelo. A partir dos valores reais e previstos, os valores de $R$ e $RMSE$ foram calculados.
 
-\begin{longtable}{m{1cm} m{10cm} m{3.5cm}}
+Assim, foram construídos modelos de \textit{Random Forest} e Regressão linear para os subconjuntos de variáveis utilizados em artigos que determinavam SST. Além disso, foi construído um modelo que reúne todas as variáveis encontradas na literatura, de forma a encontrar os atributos mais significantes para predição e SST. Na Tabela \ref{tbl:var_gps} são mostradas as variáveis para cada artigo investigado.
+
+\begin{longtable}{m{11cm} m{4cm}}
 \hline
-Id  & Variáveis                                                                                                                                    & Autores                             \\ \hline
-G1  & Média das intensidades dos pixels nos espaços RGB, \\ & HSV, L*a*b*                                                                               & Abarra et al. (2018)                \\ \hline
-G2  & Cor HSV dominante                                                                                                                            & Yossy (2017)                        \\ \hline
-G3  & Média das intensidades RGB na manga inteira, nas \\ &  regiões apex, equatorial e cume, diferença das \\ & médias e gradiente longitudinal     & Nandi, Tudu e Koley (2014)          \\ \hline
-G4  & Número de pixels correspondente à manga                                                                                                      & Teoh e Syaifudin (2007)             \\ \hline
-G5  & Média das intensidades dos pixels no espaço RGB                                                                                              & Yahaya et al. (2015)                \\ \hline
-G6  & Média das intensidades dos pixels no espaço L*a*b* \\ & e variáveis fractais 																 	& Zheng e Lu (2012)                   \\ \hline
-G7  & Média das intensidades dos pixels no espaço HSV                                                                                              & Khairunniza-Bejo e Kamarudin (2011) \\ \hline
-G8  & Média das intensidades dos pixels nos espaços HSV \\ & e L*a*b*                                                                                   & Vélez-Rivera et al. (2014)          \\ \hline
-G9  & Média das intensidades dos pixels nos espaços RGB \\ & e HSV e taxas R/G, R/B e S/H                                                              & Salunkhe e Patil (2015)             \\ \hline
-G10 & Média das intensidades dos pixels no canal b*, \\ & número de pixels e diâmetro                                                                   & Pandey, Gamit e Naik (2014) \\ \hline       
+Variáveis                                                                                                                                    & Autores                             \\ \hline
+Média das intensidades dos pixels nos espaços RGB, HSV, L*a*b*                                                                               & Abarra et al. (2018)                \\ \hline
+Cor HSV dominante                                                                                                                            & Yossy (2017)                        \\ \hline
+Média das intensidades RGB na manga inteira, nas regiões apex, equatorial e cume, diferença das médias e gradiente longitudinal     & Nandi, Tudu e Koley (2014)          \\ \hline
+Número de pixels correspondente à manga                                                                                                      & Teoh e Syaifudin (2007)             \\ \hline
+Média das intensidades dos pixels no espaço RGB                                                                                              & Yahaya et al. (2015)                \\ \hline
+Média das intensidades dos pixels no espaço L*a*b* e variáveis fractais 																 	& Zheng e Lu (2012)                   \\ \hline
+Média das intensidades dos pixels no espaço HSV                                                                                              & Khairunniza-Bejo e Kamarudin (2011) \\ \hline
+Média das intensidades dos pixels nos espaços HSV e L*a*b*                                                                                   & Vélez-Rivera et al. (2014)          \\ \hline
+Média das intensidades dos pixels nos espaços RGB e HSV e taxas R/G, R/B e S/H                                                              & Salunkhe e Patil (2015)             \\ \hline
+Média das intensidades dos pixels no canal b*, número de pixels e diâmetro                                                                   & Pandey, Gamit e Naik (2014) \\ \hline       
 \caption{Subconjuntos de variáveis obtidos a partir da literatura.}\label{tbl:var_gps}
 \end{longtable} 
 
