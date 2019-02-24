@@ -9,7 +9,7 @@ Dentre os dez artigos estudados, o atributo SST foi determinado em apenas três 
 
 Os atributos a serem extraídos das imagens das mangas foram todos aqueles empregados nos dez artigos, listados na Tabela \ref{tab:artigos_att}. Estes atributos, juntamente dos valores reais de SST para cada manga, foram utilizados para a construção de modelos preditivos. As técnicas de inferência empregadas foram a Regressão linear e \textit{Random Forest}. Através da Regressão linear foi verificada se há uma relação linear as variáveis de entrada e a de saída, assim como foi realizado pelos autores que determinaram SST em seus trabalhos. Ademais, na técnica Random Forest todas as variáveis de entrada foram utilizadas em um mesmo modelo, e por meio deste serão determinadas as variáveis mais significativas para a predição de SST em mangas. 
 
-O diagrama representando as etapas do estudo é mostrado na Figura \ref{fig:diag}.
+O estudo foi conduzido em etapas bem definidas, iniciando-se na coleta das amostras e finalizando na construção e validação dos modelos, conforme mostra a Figura \ref{fig:diag}. Cada etapa será descrita nas subseções posteriores.
 
 \begin{figure}[H]
 \centering
@@ -18,7 +18,7 @@ O diagrama representando as etapas do estudo é mostrado na Figura \ref{fig:diag
     \legend{\textbf{Fonte:} (Autor, 2019).}
 \end{figure}
 
-\section{Descrição das amostras}
+\section{Coleta das amostras}
 
 As mangas utilizadas no estudo eram da variedade ‘Palmer’, sendo uma das variedades mais produzidas no Vale do São Francisco (EMBRAPA SEMIÁRIDO, 2010), sendo caracterizada por frutos aromáticos e grandes, com peso de até 900 g, tom esverdeado ou arroxeado quando estão imaturos e cor vermelha quando maduros. 
 
@@ -35,11 +35,11 @@ As imagens das mangas foram obtidas para cada lado da fruta no mesmo dia em que 
 	\legend{\textbf{Fonte:} (Autor, 2019).}
 \end{figure}
 
-Foram tiradas fotos de 750 mangas, e, como os dois lados de cada amostra foram fotografados, no total obtiveram-se 1500 imagens. Para a 'Palmer', foram fotografadas 600 mangas até o dia da colheita e 150 após ela. A Figura \ref{img:palmer_tommy} exibe uma das fotos da 'Palmer'.
+Foram tiradas fotos de 750 mangas, e, como os dois lados de cada amostra foram fotografados, no total obtiveram-se 1500 imagens. Para a Palmer, foram fotografadas 600 mangas até o dia da colheita e 150 após ela. A Figura \ref{img:palmer_tommy} exibe uma das fotos da Palmer.
 
 \begin{figure}[H]
 \centering
-    \caption{\label{img:palmer_tommy} Foto tirada da manga 'Palmer'.}
+    \caption{\label{img:palmer_tommy} Foto tirada da manga Palmer.}
     {\includegraphics[scale=0.16]{img/palmer}}
     \legend{\textbf{Fonte: } (Autor, 2019).}
 \end{figure}
@@ -68,15 +68,16 @@ Por fim, foram traçados os contornos das mangas, visando a remoção de partes 
 
 Posteriormente, as variáveis mencionadas na Tabela \ref{tab:artigos_att} foram extraídas para cada imagem. Todos os algoritmos de pré-processamento de imagens, assim como a extração de variáveis, foram realizados através da linguagem de programação Python, com o auxílio da biblioteca OpenCV.
 
-\section{Construção dos modelos}
+\section{Construção e validação dos modelos}
 
 Antes da construção dos modelos foi realizada uma reamostragem das imagens, devido ao desbalanceamento presente na base de dados. Como havia 600 imagens de mangas tiradas antes da colheita e apenas 240 imagens tiradas após ela, foi feita uma repetição das imagens deste período até que fosse obtida uma quantidade igual de imagens nos dois períodos.
 
 A construção dos modelos foi feita através da biblioteca \textit{Scikit-Learn}, assim como a validação e obtenção das métricas. Como foi utilizada a estratégia 5-\textit{fold cross-validation}, em cada uma das 5 iterações 240 amostras eram utilizadas para teste e as demais para treinamento do modelo. A partir dos valores reais e previstos, os valores de $R$ e $RMSE$ foram calculados.
 
-Assim, foram construídos modelos de \textit{Random Forest} e Regressão linear para os subconjuntos de variáveis utilizados em artigos que determinavam SST. Além disso, foi construído um modelo que reúne todas as variáveis encontradas na literatura, de forma a encontrar os atributos mais significantes para predição e SST. Na Tabela \ref{tbl:var_gps} são mostradas as variáveis para cada artigo investigado.
+Assim, foram construídos modelos de \textit{Random Forest} e Regressão linear para os subconjuntos de variáveis utilizados em artigos que determinavam SST. Além disso, foi construído um modelo que reúne todas as variáveis encontradas na literatura, de forma a encontrar os atributos mais significantes para predição de SST. Na Tabela \ref{tbl:var_gps}, são mostradas as variáveis para cada artigo investigado.
 
 \begin{longtable}{m{11cm} m{4cm}}
+\caption{Subconjuntos de variáveis obtidos a partir da literatura.}\label{tbl:var_gps}\\
 \hline
 Variáveis                                                                                                                                    & Autores                             \\ \hline
 Média das intensidades dos pixels nos espaços RGB, HSV, L*a*b*                                                                               & Abarra et al. (2018)                \\ \hline
@@ -84,12 +85,12 @@ Cor HSV dominante                                                               
 Média das intensidades RGB na manga inteira, nas regiões apex, equatorial e cume, diferença das médias e gradiente longitudinal     & Nandi, Tudu e Koley (2014)          \\ \hline
 Número de pixels correspondente à manga                                                                                                      & Teoh e Syaifudin (2007)             \\ \hline
 Média das intensidades dos pixels no espaço RGB                                                                                              & Yahaya et al. (2015)                \\ \hline
-Média das intensidades dos pixels no espaço L*a*b* e variáveis fractais 																 	& Zheng e Lu (2012)                   \\ \hline
+Média das intensidades dos pixels no espaço L*a*b* e variáveis fractais                                                                     & Zheng e Lu (2012)                   \\ \hline
 Média das intensidades dos pixels no espaço HSV                                                                                              & Khairunniza-Bejo e Kamarudin (2011) \\ \hline
 Média das intensidades dos pixels nos espaços HSV e L*a*b*                                                                                   & Vélez-Rivera et al. (2014)          \\ \hline
 Média das intensidades dos pixels nos espaços RGB e HSV e taxas R/G, R/B e S/H                                                              & Salunkhe e Patil (2015)             \\ \hline
 Média das intensidades dos pixels no canal b*, número de pixels e diâmetro                                                                   & Pandey, Gamit e Naik (2014) \\ \hline       
-\caption{Subconjuntos de variáveis obtidos a partir da literatura.}\label{tbl:var_gps}
+\legend{\textbf{Fonte: } (Autor, 2019).}
 \end{longtable} 
 
 % \subsection{Subseção de exemplo 1 - Referenciando seções} \label{subsec:subsec1}
