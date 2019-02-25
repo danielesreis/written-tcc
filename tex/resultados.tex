@@ -31,7 +31,7 @@ Conforme esperado, o coeficiente de correlação obtido para a Regressão linear
     \caption{\label{fig:comp_hue} Modelos de Regressão linear construídos para o atributo matiz (a) Presente estudo (b) Trabalho de Khairunniza-Bejo e Kamarudin (2011).}
     \subcaptionbox{}{\includegraphics[scale=0.133]{img/scatter_sst_hue_palmer.png}}
     \subcaptionbox{}{\includegraphics[scale=0.4]{img/sst_lit_hue.png}}
-    \legend{\textbf{Fonte: } (Autor, 2019; (Khairunniza-Bejo; Kamarudin, 2011)).}
+    \legend{\textbf{Fonte: } (Autor, 2019; Khairunniza-Bejo, Kamarudin, 2011).}
 \end{figure}
 
 Devido ao relacionamento não linear entre a matiz e SST, esperava-se que com a \textit{Random Forest} fosse obtido um resultado superior. Os valores de $R$ e $RMSE$ obtidos por ela e pela Regressão linear, para cada \textit{fold}, são mostrados na Figura \ref{fig:fold_sst_hue}.
@@ -110,7 +110,7 @@ Nota-se que o espaço de cores RGB, especialmente o canal B, foi o que mais poss
 	\legend{\textbf{Fonte:} (Autor, 2019).}\label{fig:rbrate_fig}
 \end{figure}
 
-O segundo atributo mais importante, a dimensão de correlação, estima o grau de desordem das intensidades dos pixels. Assim, o quão menos uniforme é a superfície da manga, maior a desordem. Ademais, os dois outros atributos são associados ao canal azul, em duas regiões específicas a manga. Na Figura \ref{fig:equator_stalk_b}, são especificadas as regiões equatorial e da haste.
+O segundo atributo mais importante, a dimensão de correlação, estima o grau de complexidade de um sistema através da inspeção de pontos distribuídos em um espaço (SRIRAAM, 2012), que neste caso consistem nas intensidades dos pixels. Assim, o quão menos uniforme é a superfície da manga, maior a complexidade. Ademais, os dois outros atributos são associados ao canal azul, em duas regiões específicas a manga. Na Figura \ref{fig:equator_stalk_b}, são especificadas as regiões equatorial e da haste.
 
 \begin{figure}[H]
 \centering
@@ -131,7 +131,7 @@ Para entender a relação destas variáveis com o SST, foram plotadas as variaç
 	\legend{\textbf{Fonte:} (Autor, 2019).}\label{fig:var_atts}
 \end{figure}
 
-Para a primeira variável, percebe-se que seus valores mais baixos estão associados à mangas verdes, com baixo teor de SST. Com o aumento desse valor, aumenta-se gradativamente o SST, o que corresponde, na imagem, à uma diminuição dos tons amarelados e intensificação dos tons mais roxos. Para a dimensão de correlação, nota-se um comportamento pouco intuitivo e sem padrão, em que os valores de SST permanecem praticamente constantes para vários valores possíveis da dimensão de correlação. Nas outras duas variáveis, há uma diminuição perceptível do nível de SST enquanto a cor azul torna-se menos intensa nas respectivas regiões da manga.
+Para a primeira variável, percebe-se que seus valores mais baixos estão associados à mangas verdes, com baixo teor de SST. Com o aumento desse valor, aumenta-se gradativamente o SST, o que corresponde, na imagem, à uma diminuição dos tons amarelados e intensificação dos tons mais roxos. Para a dimensão de correlação, nota-se um comportamento pouco intuitivo e sem padrão, em que os valores de SST permanecem praticamente constantes para vários valores possíveis da variável. Nas outras duas variáveis, há uma diminuição perceptível do nível de SST enquanto a cor azul torna-se menos intensa nas respectivas regiões da manga.
 
 Os demais atributos extraídos apresentaram importâncias menores que 0,01 e foram desconsiderados na construção de um novo modelo de \textit{Random Forest}. O novo modelo apresentou um coeficiente de correlação igual a 0,9752, bastante próximo ao obtido para todas as variáveis.
 % \section{Seção de exemplo 1 - Códigos} \label{sec:resex1}

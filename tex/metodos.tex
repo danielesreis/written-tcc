@@ -7,7 +7,7 @@ O presente trabalho consiste em uma pesquisa do tipo quantitativa, por empregar 
 
 Dentre os dez artigos estudados, o atributo SST foi determinado em apenas três deles. O melhor resultado foi obtido para um modelo simplificado de regressão linear, em que apenas uma variável foi utilizada, enquanto que para os demais modelos os resultados foram medianos ou ruins ao empregar no máximo três variáveis de entrada. Abarra et al. (2018) utilizaram os espaços de cores RGB, HSV e L*a*b*, mas não forneceram os resultados obtidos. Assim, nota-se uma carência de um modelo robusto e generalista para predição de SST. Desta forma, o estudo foi conduzido de forma a investigar quais atributos visuais da manga mais se relacionam a esse atributo de qualidade, para que um bom modelo preditivo seja obtido.
 
-Os atributos a serem extraídos das imagens das mangas foram todos aqueles empregados nos dez artigos, listados na Tabela \ref{tab:artigos_att}. Estes atributos, juntamente dos valores reais de SST para cada manga, foram utilizados para a construção de modelos preditivos. As técnicas de inferência empregadas foram a Regressão linear e \textit{Random Forest}. Através da Regressão linear foi verificada se há uma relação linear as variáveis de entrada e a de saída, assim como foi realizado pelos autores que determinaram SST em seus trabalhos. Ademais, na técnica Random Forest todas as variáveis de entrada foram utilizadas em um mesmo modelo, e por meio deste serão determinadas as variáveis mais significativas para a predição de SST em mangas. 
+Os atributos a serem extraídos das imagens das mangas foram todos aqueles empregados nos dez artigos, listados na Tabela \ref{tab:artigos_att}. Estes atributos, juntamente dos valores reais de SST para cada manga, foram utilizados para a construção de modelos preditivos. As técnicas de inferência empregadas foram a Regressão linear e \textit{Random Forest}. Através da Regressão linear foi verificada se há uma relação linear as variáveis de entrada e a de saída, assim como foi realizado pelos autores que determinaram SST em seus trabalhos. Ademais, na técnica \textit{Random Forest} todas as variáveis de entrada foram utilizadas em um mesmo modelo, e por meio deste serão determinadas as variáveis mais significativas para a predição de SST em mangas. 
 
 O estudo foi conduzido em etapas bem definidas, iniciando-se na coleta das amostras e finalizando na construção e validação dos modelos, conforme mostra a Figura \ref{fig:diag}. Cada etapa será descrita nas subseções posteriores.
 
@@ -48,7 +48,7 @@ Foram tiradas fotos de 750 mangas, e, como os dois lados de cada amostra foram f
 
 Os valores reais de SST foram obtidos segundo o procedimento do Instituto Adolfo Lutz (2008), sendo também adotado por Yahaya et al. (2015). Nele, as mangas têm inicialmente sua polpa homogeneizada e filtrada por uma centrífuga. O suco extraído é colocado em um refratômetro digital (HI 96804, Hanna Instruments, USA) para a quantificação de SST em ºBrix.
 
-\section{Pré-processamento das imagens}
+\section{Pré-processamento}
 
 Como as imagens obtidas possuíam ruído e informações irrelevantes, foi necessário realizar o pré-processamento das mesmas. Foram testadas diferentes configurações de algoritmos, de forma a remover a maior quantidade possível de ruído sem perda de informações importantes da imagem. Apesar de as fotos terem sido tiradas em um ambiente controlado, as imagens resultantes variaram quanto ao ruído nelas contido, devido ao acúmulo de sujeira na câmara com o passar das semanas do experimento. Sendo assim, as configurações das técnicas variaram para cada imagem.
 
@@ -56,7 +56,7 @@ A primeira técnica aplicada foi o filtro da mediana, visando a remoção de man
 
 A utilização destas técnicas não garantiu uma remoção completa das sombras contidas na imagem. Assim, utilizou-se a limiarização simples para este fim, visto que a intensidade dos pixels correspondentes às sombras era, em geral, visivelmente menor que a intensidade dos pixels das mangas. A configuração desta técnica que conferiu os melhores resultados possuiu um \textit{threshold} igual a 100, aplicado na imagem em escala de cinza. Como a limiarização simples resultou na remoção de partes da manga, além das sombras delas, empregou-se a operação morfológica de fechamento para o preenchimento das mangas. O melhor tamanho do \textit{kernel} obtido foi de 13x13 pixels.
 
-Por fim, foram traçados os contornos das mangas, visando a remoção de partes da imagem que não continham a fruta. A Figura \ref{fig:prep} mostra uma imagem original e pré-processada.
+Por fim, foram traçados os contornos das mangas, visando a remoção de partes da imagem que não continham a fruta, através da função \textit{findContours} do OpenCV. A Figura \ref{fig:prep} mostra uma imagem original e pré-processada.
 
 \begin{figure}[!htb]
 \centering
@@ -66,7 +66,15 @@ Por fim, foram traçados os contornos das mangas, visando a remoção de partes 
     \legend{\textbf{Fonte: } (Autor, 2019).}
 \end{figure}
 
-Posteriormente, as variáveis mencionadas na Tabela \ref{tab:artigos_att} foram extraídas para cada imagem. Todos os algoritmos de pré-processamento de imagens, assim como a extração de variáveis, foram realizados através da linguagem de programação Python, com o auxílio da biblioteca OpenCV.
+Posteriormente, as variáveis mencionadas na Tabela \ref{tab:artigos_att} foram extraídas para cada imagem. Todos os algoritmos de pré-processamento de imagens foram realizados através da linguagem de programação Python, com o auxílio da biblioteca OpenCV.
+
+\section{Extração de variáveis}
+
+Com o pré-processamento, foi possível realizar a extração de variáveis sem a interferência de informações irrelevantes. Para a maioria dos atributos não foi necessário realizar nenhuma manipulação adicional nas imagens. Para o atributo número de pixels, entretanto, a versão binária da imagem foi utilizada, de forma que os pixels correspondentes à manga possuíssem o valor 1 e os pixels correspondentes ao plano de fundo possuíssem o valor 0. Assim, através da soma desses valores foi obtida uma estimativa da área da manga, a partir da qual foi calculado o seu diâmetro. As variáveis fractais, por outro lado, exigem um custo computacional maior para sua determinação. Assim, antes da extração destes atributos, as imagens foram reduzidas para um terço do seu tamanho original.
+
+O atributo cor dominante HSV foi obtido a partir de um mapeamento do valor da matiz para uma das cores presentes no cone HSV, mostrado na Figura \ref{img:hsv_hex}. O gradiente RGB foi obtido após o ajuste de uma reta para os valores RGB da manga ao longo de seu eixo longitudinal. Para o canal que resultasse num melhor ajuste da reta, foi obtido o intercepto da respectiva reta. 
+
+Por fim, os demais atributos, associados à média das intensidades dos pixels, foram obtidos com o auxílio da biblioteca \textit{Numpy} e sua função \textit{mean}, que retorna a média dos valores de uma matriz ou \textit{array}. Como as imagens estavam originalmente representadas no espaço RGB, foi necessário realizar a conversão para os espaços HSV e L*a*b* antes da obtenção da média dos pixels nestes espaços.
 
 \section{Construção e validação dos modelos}
 
@@ -74,24 +82,26 @@ Antes da construção dos modelos foi realizada uma reamostragem das imagens, de
 
 A construção dos modelos foi feita através da biblioteca \textit{Scikit-Learn}, assim como a validação e obtenção das métricas. Como foi utilizada a estratégia 5-\textit{fold cross-validation}, em cada uma das 5 iterações 240 amostras eram utilizadas para teste e as demais para treinamento do modelo. A partir dos valores reais e previstos, os valores de $R$ e $RMSE$ foram calculados.
 
-Assim, foram construídos modelos de \textit{Random Forest} e Regressão linear para os subconjuntos de variáveis utilizados em artigos que determinavam SST. Além disso, foi construído um modelo que reúne todas as variáveis encontradas na literatura, de forma a encontrar os atributos mais significantes para predição de SST. Na Tabela \ref{tbl:var_gps}, são mostradas as variáveis para cada artigo investigado.
+Assim, foram construídos modelos de \textit{Random Forest} e Regressão linear em que as variáveis de entrada foram utilizadas em artigos que determinavam SST. Os autores Khairunniza-Bejo e Kamarudin (2011) utilizaram a matiz, do espaço HSV, enquanto Yahaya et al. utilizaram os três canais do espaço RGB. Abarra et al. (2018) utilizaram os espaços RGB, HSV e L*a*b*, mas como não forneceram resultados, o experimento deles não foi replicado. 
 
-\begin{longtable}{m{11cm} m{4cm}}
-\caption{Subconjuntos de variáveis obtidos a partir da literatura.}\label{tbl:var_gps}\\
-\hline
-Variáveis                                                                                                                                    & Autores                             \\ \hline
-Média das intensidades dos pixels nos espaços RGB, HSV, L*a*b*                                                                               & Abarra et al. (2018)                \\ \hline
-Cor HSV dominante                                                                                                                            & Yossy (2017)                        \\ \hline
-Média das intensidades RGB na manga inteira, nas regiões apex, equatorial e cume, diferença das médias e gradiente longitudinal     & Nandi, Tudu e Koley (2014)          \\ \hline
-Número de pixels correspondente à manga                                                                                                      & Teoh e Syaifudin (2007)             \\ \hline
-Média das intensidades dos pixels no espaço RGB                                                                                              & Yahaya et al. (2015)                \\ \hline
-Média das intensidades dos pixels no espaço L*a*b* e variáveis fractais                                                                     & Zheng e Lu (2012)                   \\ \hline
-Média das intensidades dos pixels no espaço HSV                                                                                              & Khairunniza-Bejo e Kamarudin (2011) \\ \hline
-Média das intensidades dos pixels nos espaços HSV e L*a*b*                                                                                   & Vélez-Rivera et al. (2014)          \\ \hline
-Média das intensidades dos pixels nos espaços RGB e HSV e taxas R/G, R/B e S/H                                                              & Salunkhe e Patil (2015)             \\ \hline
-Média das intensidades dos pixels no canal b*, número de pixels e diâmetro                                                                   & Pandey, Gamit e Naik (2014) \\ \hline       
-\legend{\textbf{Fonte: } (Autor, 2019).}
-\end{longtable} 
+Por fim, foi construído um modelo que reúne todas as variáveis encontradas na literatura, já listadas na Tabela \ref{tab:artigos_att}, de forma a encontrar as variáveis mais significantes para predição de SST.
+
+% \begin{longtable}{m{11cm} m{4cm}}
+% \caption{Subconjuntos de variáveis obtidos a partir da literatura.}\label{tbl:var_gps}\\
+% \hline
+% Variáveis                                                                                                                                    & Autores                             \\ \hline
+% Média das intensidades dos pixels nos espaços RGB, HSV, L*a*b*                                                                               & Abarra et al. (2018)                \\ \hline
+% Cor HSV dominante                                                                                                                            & Yossy (2017)                        \\ \hline
+% Média das intensidades RGB na manga inteira, nas regiões apex, equatorial e cume, diferença das médias e gradiente longitudinal     & Nandi, Tudu e Koley (2014)          \\ \hline
+% Número de pixels correspondente à manga                                                                                                      & Teoh e Syaifudin (2007)             \\ \hline
+% Média das intensidades dos pixels no espaço RGB                                                                                              & Yahaya et al. (2015)                \\ \hline
+% Média das intensidades dos pixels no espaço L*a*b* e variáveis fractais                                                                     & Zheng e Lu (2012)                   \\ \hline
+% Média das intensidades dos pixels no espaço HSV                                                                                              & Khairunniza-Bejo e Kamarudin (2011) \\ \hline
+% Média das intensidades dos pixels nos espaços HSV e L*a*b*                                                                                   & Vélez-Rivera et al. (2014)          \\ \hline
+% Média das intensidades dos pixels nos espaços RGB e HSV e taxas R/G, R/B e S/H                                                              & Salunkhe e Patil (2015)             \\ \hline
+% Média das intensidades dos pixels no canal b*, número de pixels e diâmetro                                                                   & Pandey, Gamit e Naik (2014) \\ \hline       
+% \legend{\textbf{Fonte: } (Autor, 2019).}
+% \end{longtable} 
 
 % \subsection{Subseção de exemplo 1 - Referenciando seções} \label{subsec:subsec1}
 

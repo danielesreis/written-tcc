@@ -11,11 +11,11 @@ Neste contexto, destaca-se a visão computacional, subárea da Inteligência Art
 
 \section{Motivação}
 
-O trabalho proposto possui potencial para beneficiar a comercialização da manga ao viabilizar a automatização de processos manuais. Assim, a determinação da qualidade das frutas torna-se mais rápida, econômica e consistente (DONIS-GONZÁLEZ et al., 2013). Como a obtenção do teor de sólidos solúveis não exige a destruição das amostras, produtoras \textcolor{red}{e/ou consumidores} de mangas não teriam mais o prejuízo do descarte, além de poderem proporcionar ao mercado consumidor um produto com qualidade assegurada. 
+O trabalho proposto possui potencial para beneficiar a comercialização da manga ao viabilizar a automatização de processos manuais. Assim, a determinação da qualidade das frutas torna-se mais rápida, econômica e consistente (DONIS-GONZÁLEZ et al., 2013). Como a obtenção do teor de sólidos solúveis não exige a destruição das amostras, produtoras e/ou consumidores de mangas não teriam mais o prejuízo do descarte, além de poderem proporcionar ao mercado consumidor um produto com qualidade assegurada. 
 
 \section{Definição do Problema}
 
-Para a obtenção de uma informação desejada a partir de uma imagem, é necessário cumprir uma sequência de etapas que se inicia na aquisição das imagens das amostras. Segundo Esquef (2002), após a aquisição é realizado o pré-processamento das imagens. Esta etapa é fundamental em um sistema de visão computacional, sendo necessária para remover informações indesejadas, realçar ou atenuar algumas das partes da imagem. Após ser realizado o pré-processamento, é aplicada a segmentação, para que a imagem seja dividida em partes disjuntas, visando sua simplificação (JOSEPH; SINGH, 2014). No contexto deste trabalho, a única região de interesse é a manga; assim, as imagens foram segmentadas visando a separação entre a fruta e o plano de fundo. A penúltima etapa realizada foi a extração de atributos, em que para cada imagem é obtido um conjunto de características que a define. Por fim, estes atributos de cada imagem foram relacionados ao atributo desejado através de um modelo preditivo.
+Para a obtenção de uma informação desejada a partir de uma imagem, é necessário cumprir uma sequência de etapas que se inicia na aquisição das imagens das amostras. Segundo Esquef (2002), após a aquisição é realizado o pré-processamento das imagens. Esta etapa é 	fundamental em um sistema de visão computacional, sendo necessária para remover informações indesejadas, realçar ou atenuar algumas das partes da imagem. Após ser realizado o pré-processamento, é aplicada a segmentação, para que a imagem seja dividida em partes disjuntas, visando sua simplificação (JOSEPH; SINGH, 2014). No contexto deste trabalho, a única região de interesse é a manga; assim, as imagens foram segmentadas visando a separação entre a fruta e o plano de fundo. A penúltima etapa realizada foi a extração de atributos, em que para cada imagem é obtido um conjunto de características que a define. Por fim, estes atributos de cada imagem foram relacionados ao atributo desejado através de um modelo preditivo.
 
 Entretanto, a escolha de técnicas de pré-processamento de imagens e atributos empregados não é realizada de forma trivial e depende da natureza do problema. Logo, para a construção de um bom modelo preditivo de sólidos solúveis totais (SST), diferentes técnicas de pré-processamento foram testadas e, para a determinação dos atributos mais significativos, um estudo investigativo sobre elas foi conduzido. Por fim, a relação entre os atributos e o SST deverá ser modelada através de uma Regressão linear e Random Forest, cujos desempenhos foram avaliados através de métricas apropriadas. Assim, através deste estudo se buscou um profundo entendimento entre os aspectos visuais da manga e sua doçura. 
 
@@ -29,7 +29,6 @@ O objetivo geral do trabalho consiste na identificação de quais atributos de u
 \begin{itemize}
 	\item Determinar as técnicas de pré-processamento de imagens mais adequadas para o problema;
     \item Realizar um estudo investigativo quanto aos atributos através de modelos de Regressão linear e Random Forest;
-    \item \textcolor{red}{Correlacionar as imagens com os atributos físico-químicos das mangas.}
 \end{itemize}
 
 \section{Organização do trabalho}
