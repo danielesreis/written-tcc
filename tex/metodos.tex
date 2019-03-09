@@ -35,12 +35,23 @@ As imagens das mangas foram obtidas para cada lado da fruta no mesmo dia em que 
 	\legend{\textbf{Fonte:} (Autor, 2019).}
 \end{figure}
 
-Foram tiradas fotos de 750 mangas, e, como os dois lados de cada amostra foram fotografados, no total obtiveram-se 1500 imagens. Para a Palmer, foram fotografadas 600 mangas até o dia da colheita e 150 após ela. A Figura \ref{img:palmer_tommy} exibe uma das fotos da manga Palmer.
+Foram tiradas fotos de 750 mangas, e, como os dois lados de cada amostra foram fotografados, no total obtiveram-se 1500 imagens. Para a Palmer, foram fotografadas 600 mangas até o dia da colheita e 150 após ela. A Figura \ref{img:palmer_tommy} exibe fotos da manga Palmer em diferentes estádios.
 
 \begin{figure}[H]
 \centering
-    \caption{\label{img:palmer_tommy} Foto tirada da manga Palmer, aos 10 dias após a colheita.}
-    {\includegraphics[scale=0.16]{img/palmer}}
+    \caption{\label{img:palmer_tommy} Fotos tiradas da manga Palmer (a) 35 dias após a floração (b) 50 dias após a floração (c) 65 dias após a floração (d) 80 dias após a floração (e) 95 dias após a floração (f) 110 dias após a floração (g) 125 dias após a floração (h) 140 dias após a floração (i) 155 dias após a floração (j) 170 dias após a floração (k) 10 dias após a colheita (l) 20 dias após a colheita.}
+    \subcaptionbox{}{\includegraphics[scale=0.02]{img/palmer1}}
+    \subcaptionbox{}{\includegraphics[scale=0.02]{img/palmer2}}
+    \subcaptionbox{}{\includegraphics[scale=0.02]{img/palmer3}}
+    \subcaptionbox{}{\includegraphics[scale=0.02]{img/palmer4}}
+    \subcaptionbox{}{\includegraphics[scale=0.02]{img/palmer5}}
+    \subcaptionbox{}{\includegraphics[scale=0.02]{img/palmer6}}
+    \subcaptionbox{}{\includegraphics[scale=0.02]{img/palmer7}}
+    \subcaptionbox{}{\includegraphics[scale=0.02]{img/palmer8}}
+    \subcaptionbox{}{\includegraphics[scale=0.02]{img/palmer9}}
+    \subcaptionbox{}{\includegraphics[scale=0.02]{img/palmer10}}
+    \subcaptionbox{}{\includegraphics[scale=0.02]{img/palmer11}}
+    \subcaptionbox{}{\includegraphics[scale=0.02]{img/palmer12}}
     \legend{\textbf{Fonte: } (Autor, 2019).}
 \end{figure}
 
@@ -52,18 +63,50 @@ Os valores reais de SST foram obtidos segundo o procedimento do Instituto Adolfo
 
 Como as imagens obtidas possuíam ruído e informações irrelevantes, foi necessário realizar o pré-processamento das mesmas. Foram testadas diferentes configurações de algoritmos, de forma a remover a maior quantidade possível de ruído sem perda de informações importantes da imagem. Apesar de as fotos terem sido tiradas em um ambiente controlado, as imagens resultantes variaram quanto ao ruído nelas contido, devido ao acúmulo de sujeira na câmara com o passar das semanas do experimento. Sendo assim, as configurações das técnicas variaram para cada imagem.
 
-A primeira técnica aplicada foi o filtro da mediana, visando a remoção de manchas contidas nas imagens. O tamanho de janela que garantiu uma melhor remoção de ruído na maioria das imagens foi de 11x11 pixels. Após isso, as imagens foram segmentadas através do algoritmo de Otsu, de forma que as mangas fossem isoladas do fundo. Com isso, notou-se nas imagens a presença de pequenos pontos que não foram removidos pelo filtro da mediana. Apesar de a remoção dos mesmos ter sido possível com uma segunda filtragem pela mediana, notou-se uma perda de detalhes na manga. Sendo assim, optou-se por empregar a operação de abertura, através da qual pequenos pontos da imagem foram removidos, ao empregar um \textit{kernel} variando entre 15x15 e 105x105 pixels. 
+A primeira técnica aplicada foi o filtro da mediana, visando a remoção de manchas contidas nas imagens. O tamanho de janela que garantiu uma melhor remoção de ruído na maioria das imagens foi de 11x11 pixels. Na Figura \ref{fig:orig_median}, são mostradas a imagem original de uma manga e sua versão pré-processada com filtro da mediana.
 
-A utilização destas técnicas não garantiu uma remoção completa das sombras contidas na imagem. Assim, utilizou-se a limiarização simples para este fim, visto que a intensidade dos pixels correspondentes às sombras era, em geral, visivelmente menor que a intensidade dos pixels das mangas. A configuração desta técnica que conferiu os melhores resultados possuiu um \textit{threshold} igual a 100, aplicado na imagem em escala de cinza. Como a limiarização simples resultou na remoção de partes da manga, além das sombras delas, empregou-se a operação morfológica de fechamento para o preenchimento das mangas. O melhor tamanho do \textit{kernel} obtido foi de 13x13 pixels.
-
-Por fim, foram traçados os contornos das mangas, visando a remoção de partes da imagem que não continham a fruta, através da função \textit{findContours} do OpenCV. A Figura \ref{fig:prep} mostra uma imagem original e pré-processada.
-
-\begin{figure}[!htb]
+\begin{figure}[H]
 \centering
-    \caption{\label{fig:prep} Antes e depois do pré-processamento (a) Imagem original (b) Imagem resultante após utilização de técnicas de pré-processamento.}
-    \subcaptionbox{}{\includegraphics[scale=0.035]{img/sem_processamento.JPG}}
-    \subcaptionbox{}{\includegraphics[scale=0.062]{img/processada.JPG}}
+    \caption{\label{fig:orig_median} Antes e depois da filtragem por filtro da mediana (a) Imagem original (b) Imagem tratada pelo filtro da mediana.}
+    \subcaptionbox{}{\includegraphics[scale=0.025]{img/sem_processamento.jpg}}
+    \subcaptionbox{}{\includegraphics[scale=0.025]{img/median_filtered.jpg}}
     \legend{\textbf{Fonte: } (Autor, 2019).}
+\end{figure}
+
+Após isso, as imagens foram segmentadas através do algoritmo de Otsu, de forma que as mangas fossem isoladas do fundo. Com isso, notou-se nas imagens a presença de pequenos pontos que não foram removidos pelo filtro da mediana. Apesar de a remoção dos mesmos ser possível com uma segunda filtragem pela mediana, notou-se uma perda de detalhes na manga. Sendo assim, optou-se por empregar a operação de abertura, através da qual pequenos pontos da imagem foram removidos, ao empregar um \textit{kernel} variando entre 15x15 e 105x105 pixels. A Figura \ref{fig:otsu_open} mostra a imagem segmentada e tratada pela operação de abertura.
+
+\begin{figure}[H]
+\centering
+    \caption{\label{fig:otsu_open} Segmentação e operação de abertura na imagem (a) Imagem segmentada (b) Imagem tratada pela operação de abertura.}
+    \subcaptionbox{}{\includegraphics[scale=0.025]{img/segmented.jpg}}
+    \subcaptionbox{}{\includegraphics[scale=0.025]{img/opened.jpg}}
+    \legend{\textbf{Fonte: } (Autor, 2019).}
+\end{figure}
+
+A utilização destas técnicas não garantiu uma remoção completa das sombras contidas na imagem. Assim, utilizou-se a limiarização simples para este fim, visto que a intensidade dos pixels correspondentes às sombras era, em geral, visivelmente menor que a intensidade dos pixels das mangas. A configuração desta técnica que conferiu os melhores resultados possuiu um \textit{threshold} igual a 100, aplicado na imagem em escala de cinza. Como a limiarização simples resultou na remoção de partes da manga, além das sombras delas, empregou-se a operação morfológica de fechamento para o preenchimento das mangas. O melhor tamanho do \textit{kernel} obtido foi de 13x13 pixels. Na Figura \ref{fig:thresh_close}, são mostradas a figura limiarizada e tratada pela operação de fechamento.
+
+\begin{figure}[H]
+\centering
+    \caption{\label{fig:thresh_close} Limiarização simples e operação de fechamento na imagem (a) Imagem limiarizada (b) Imagem tratada pela operação de fechamento.}
+    \subcaptionbox{}{\includegraphics[scale=0.025]{img/thresholded.jpg}}
+    \subcaptionbox{}{\includegraphics[scale=0.025]{img/closed.jpg}}
+    \legend{\textbf{Fonte: } (Autor, 2019).}
+\end{figure}
+
+Por fim, foram traçados os contornos das mangas, visando a remoção de partes da imagem que não continham a fruta, através da função \textit{findContours} do OpenCV. A Figura \ref{fig:prep} mostra a imagem final após todas etapas de pré-processamento.
+
+% \begin{figure}[H]
+% \centering
+%     \caption{\label{fig:prep} Imagem pré-processada resultante.
+%     \includegraphics[scale=0.035]{img/cut.jpg}
+%     \legend{\textbf{Fonte: } (Autor, 2019).}
+% \end{figure}
+
+\begin{figure}[H]
+\centering
+    \caption{Imagem pré-processada resultante.}\label{fig:prep}
+    \includegraphics[scale=0.025]{img/cut.jpg}
+    \legend{\textbf{Fonte:} (Autor, 2019).}
 \end{figure}
 
 Posteriormente, as variáveis mencionadas na Tabela \ref{tab:artigos_att} foram extraídas para cada imagem. Todos os algoritmos de pré-processamento de imagens foram realizados através da linguagem de programação Python, com o auxílio da biblioteca OpenCV.
