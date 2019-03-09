@@ -1,11 +1,11 @@
 %--------------------------------------------------------------------------------------
 % Este arquivo contém a sua metodologia
 %--------------------------------------------------------------------------------------
-\chapter{Materiais e Métodos} \label{ch:MM} %Uma label é como você referencia uma seção no texto com a tag \ref{}
+\chapter{Material e Métodos} \label{ch:MM} %Uma label é como você referencia uma seção no texto com a tag \ref{}
 
 O presente trabalho consiste em uma pesquisa do tipo quantitativa, por empregar procedimentos estruturados de coleta e análise de dados para descrição de um fenômeno e quantificação de resultados (FONSECA, 2002); quanto à sua natureza, ela é do tipo aplicada, devido aos resultados obtidos poderem ser utilizados para uma aplicação prática; quanto aos objetivos, é uma pesquisa explicativa, devido à busca pelos fatores determinantes para a ocorrência de um fenômeno (GIL, 2007) e, por fim, experimental quanto aos procedimentos adotados. 
 
-Dentre os dez artigos estudados, o atributo SST foi determinado em apenas três deles. O melhor resultado foi obtido para um modelo simplificado de regressão linear, em que apenas uma variável foi utilizada, enquanto que para os demais modelos os resultados foram medianos ou ruins ao empregar no máximo três variáveis de entrada. Abarra et al. (2018) utilizaram os espaços de cores RGB, HSV e L*a*b*, mas não forneceram os resultados obtidos. Assim, nota-se uma carência de um modelo robusto e generalista para predição de SST. Desta forma, o estudo foi conduzido de forma a investigar quais atributos visuais da manga mais se relacionam a esse atributo de qualidade, para que um bom modelo preditivo seja obtido.
+Dentre os dez artigos estudados, o atributo sólidos solúveis totais foi determinado em apenas três deles. O melhor resultado foi obtido para um modelo simplificado de regressão linear, em que apenas uma variável foi utilizada, enquanto que para os demais modelos os resultados foram medianos ou ruins ao empregar no máximo três variáveis de entrada. Abarra et al. (2018) utilizaram os espaços de cores RGB, HSV e L*a*b*, mas não forneceram os resultados obtidos. Assim, nota-se uma carência de um modelo robusto e generalista para predição de SST. Desta forma, o estudo foi conduzido de forma a investigar quais atributos visuais da manga mais se relacionam a esse atributo de qualidade, para que um bom modelo preditivo seja obtido.
 
 Os atributos a serem extraídos das imagens das mangas foram todos aqueles empregados nos dez artigos, listados na Tabela \ref{tab:artigos_att}. Estes atributos, juntamente dos valores reais de SST para cada manga, foram utilizados para a construção de modelos preditivos. As técnicas de inferência empregadas foram a Regressão linear e \textit{Random Forest}. Através da Regressão linear foi verificada se há uma relação linear as variáveis de entrada e a de saída, assim como foi realizado pelos autores que determinaram SST em seus trabalhos. Ademais, na técnica \textit{Random Forest} todas as variáveis de entrada foram utilizadas em um mesmo modelo, e por meio deste serão determinadas as variáveis mais significativas para a predição de SST em mangas. 
 
@@ -22,11 +22,11 @@ O estudo foi conduzido em etapas bem definidas, iniciando-se na coleta das amost
 
 As mangas utilizadas no estudo eram da variedade ‘Palmer’, sendo uma das variedades mais produzidas no Vale do São Francisco (EMBRAPA SEMIÁRIDO, 2010), sendo caracterizada por frutos aromáticos e grandes, com peso de até 900 g, tom esverdeado ou arroxeado quando estão imaturos e cor vermelha quando maduros. 
 
-As amostras foram coletadas de pomares comerciais da Fazenda SpecialFruit Importação e Exportação Ltda. em Petrolina e Juazeiro. Foram marcadas trinta plantas distribuídas em cinco fileiras de plantio de um lote do pomar. A cada quinze dias foram colhidos manualmente 60 frutos (dois de cada planta), para cada variedade, iniciando-se dos 35 dias após a floração\footnote{\label{ftnote:floracao} Etapa reprodutiva em que ocorre a diferenciação do meristema vegetativo para o floral, originando os componentes da flor (pétalas, estames e pistilo) (DUARTE FILHO et al., 1999).} até o ponto de colheita comercial adotado pela Fazenda, visando a construção de um modelo robusto de predição, onde mangas de diferentes estádios de maturação fossem utilizadas. As mangas foram colhidas num intervalo de 15 em 15 dias e, após a colheita, de 10 em 10 dias.
+As amostras foram coletadas de pomares comerciais da Fazenda SpecialFruit Importação e Exportação Ltda. em Petrolina e Juazeiro. Foram marcadas trinta plantas distribuídas em cinco fileiras de plantio de um lote do pomar. A cada quinze dias foram colhidos manualmente 60 frutos (dois de cada planta), para cada variedade, iniciando-se dos 35 dias após a floração\footnote{\label{ftnote:floracao} Etapa reprodutiva em que ocorre a diferenciação do meristema vegetativo para o floral, originando os componentes da flor (pétalas, estames e pistilo) (DUARTE FILHO et al., 1999).} até o ponto de colheita comercial adotado pela Fazenda, visando a construção de um modelo robusto de predição, onde mangas de diferentes estádios de maturação fossem utilizadas. As mangas foram analisadas num intervalo de 15 em 15 dias e, após a colheita, de 10 em 10 dias.
 
 \section{Aquisição das imagens}
 
-As imagens das mangas foram obtidas para cada lado da fruta no mesmo dia em que elas foram coletadas. Elas foram posicionadas em uma caixa de madeira compensada com um orifício no topo (Figura \ref{img:caixa}), onde foi posicionada uma câmera de 18 MP. O interior da caixa é preto fosco e contém uma superfície não reflexiva para o apoio das mangas. Na parte superior foram dispostos 3 LEDs brancos para a iluminação das amostras. O equipamento foi obtido a partir de uma parceria com o Laboratório de Energia na Agricultura (LENA) da UNIVASF. 
+As imagens das mangas foram obtidas para cada lado da fruta no mesmo dia em que elas foram coletadas. Elas foram posicionadas em uma caixa de madeira compensada com um orifício no topo (Figura \ref{img:caixa}), onde foi posicionada uma câmera de 18 MP. O interior da caixa é preto fosco e contém uma superfície não reflexiva para o apoio das mangas. O sistema de iluminação da câmara era constituído por 3 LEDs Solderless XPE2 de 3W da CREE, branco frio 5000K a 8300K, dispostos a uma distância angular de 120º entre eles. O equipamento foi obtido a partir de uma parceria com o Laboratório de Energia na Agricultura (LENA) da UNIVASF. 
 
 \begin{figure}[H]
 \centering
@@ -35,11 +35,11 @@ As imagens das mangas foram obtidas para cada lado da fruta no mesmo dia em que 
 	\legend{\textbf{Fonte:} (Autor, 2019).}
 \end{figure}
 
-Foram tiradas fotos de 750 mangas, e, como os dois lados de cada amostra foram fotografados, no total obtiveram-se 1500 imagens. Para a Palmer, foram fotografadas 600 mangas até o dia da colheita e 150 após ela. A Figura \ref{img:palmer_tommy} exibe uma das fotos da Palmer.
+Foram tiradas fotos de 750 mangas, e, como os dois lados de cada amostra foram fotografados, no total obtiveram-se 1500 imagens. Para a Palmer, foram fotografadas 600 mangas até o dia da colheita e 150 após ela. A Figura \ref{img:palmer_tommy} exibe uma das fotos da manga Palmer.
 
 \begin{figure}[H]
 \centering
-    \caption{\label{img:palmer_tommy} Foto tirada da manga Palmer.}
+    \caption{\label{img:palmer_tommy} Foto tirada da manga Palmer, aos 10 dias após a colheita.}
     {\includegraphics[scale=0.16]{img/palmer}}
     \legend{\textbf{Fonte: } (Autor, 2019).}
 \end{figure}
@@ -72,7 +72,7 @@ Posteriormente, as variáveis mencionadas na Tabela \ref{tab:artigos_att} foram 
 
 Com o pré-processamento, foi possível realizar a extração de variáveis sem a interferência de informações irrelevantes. Para a maioria dos atributos não foi necessário realizar nenhuma manipulação adicional nas imagens. Para o atributo número de pixels, entretanto, a versão binária da imagem foi utilizada, de forma que os pixels correspondentes à manga possuíssem o valor 1 e os pixels correspondentes ao plano de fundo possuíssem o valor 0. Assim, através da soma desses valores foi obtida uma estimativa da área da manga, a partir da qual foi calculado o seu diâmetro. As variáveis fractais, por outro lado, exigem um custo computacional maior para sua determinação. Assim, antes da extração destes atributos, as imagens foram reduzidas para um terço do seu tamanho original.
 
-O atributo cor dominante HSV foi obtido a partir de um mapeamento do valor da matiz para uma das cores presentes no cone HSV, mostrado na Figura \ref{img:hsv_hex}. O gradiente RGB foi obtido após o ajuste de uma reta para os valores RGB da manga ao longo de seu eixo longitudinal. Para o canal que resultasse num melhor ajuste da reta, foi obtido o intercepto da respectiva reta. 
+O atributo cor dominante HSV foi obtido a partir de um mapeamento do valor da matiz para uma das cores presentes no cone HSV, mostrado previamente na Figura \ref{img:hsv_hex}. O gradiente RGB foi obtido após o ajuste de uma reta para os valores RGB da manga ao longo de seu eixo longitudinal. Para o canal que resultasse num melhor ajuste da reta, foi obtido o intercepto da respectiva reta. 
 
 Por fim, os demais atributos, associados à média das intensidades dos pixels, foram obtidos com o auxílio da biblioteca \textit{Numpy} e sua função \textit{mean}, que retorna a média dos valores de uma matriz ou \textit{array}. Como as imagens estavam originalmente representadas no espaço RGB, foi necessário realizar a conversão para os espaços HSV e L*a*b* antes da obtenção da média dos pixels nestes espaços.
 
@@ -84,7 +84,7 @@ A construção dos modelos foi feita através da biblioteca \textit{Scikit-Learn
 
 Assim, foram construídos modelos de \textit{Random Forest} e Regressão linear em que as variáveis de entrada foram utilizadas em artigos que determinavam SST. Os autores Khairunniza-Bejo e Kamarudin (2011) utilizaram a matiz, do espaço HSV, enquanto Yahaya et al. utilizaram os três canais do espaço RGB. Abarra et al. (2018) utilizaram os espaços RGB, HSV e L*a*b*, mas como não forneceram resultados, o experimento deles não foi replicado. 
 
-Por fim, foi construído um modelo que reúne todas as variáveis encontradas na literatura, já listadas na Tabela \ref{tab:artigos_att}, de forma a encontrar as variáveis mais significantes para predição de SST.
+Por fim, foi construído um modelo que reúne todas as variáveis encontradas na literatura, já listadas na Tabela \ref{tab:artigos_att}, de forma a encontrar as variáveis mais significantes para predição de SST em mangas da variedade Palmer.
 
 % \begin{longtable}{m{11cm} m{4cm}}
 % \caption{Subconjuntos de variáveis obtidos a partir da literatura.}\label{tbl:var_gps}\\

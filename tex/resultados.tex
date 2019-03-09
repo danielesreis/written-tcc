@@ -1,10 +1,10 @@
-\chapter{Resultados} \label{ch:RD}
+\chapter{Resultados e Discussão} \label{ch:RD}
 
-A estatística descritiva do atributo SST é mostrada na Tabela \ref{tbl:sst_stat}, onde nota-se uma grande variabilidade nos dados. Dessa forma, é possível construir um modelo robusto capaz de realizar a predição deste atributo para diferentes estádios de maturação da manga.
+A estatística descritiva do atributo sólidos solúveis totais é mostrada na Tabela \ref{tbl:sst_stat}, onde nota-se uma grande variabilidade nos dados. Dessa forma, é possível construir um modelo robusto capaz de realizar a predição deste atributo para diferentes estádios de maturação da manga.
 
 \begin{table}[H]
 \centering
-\caption{Estatística descritivas dos valores de referência de SST.} \label{tbl:sst_stat}
+\caption{Estatística descritivas dos valores de referência dos sólidos solúveis totais.} \label{tbl:sst_stat}
 \begin{tabular}{llllllll}
 \hline
 Dados     & Amostras & M\'edia & M\'in & M\'ax & Amplitude & SD & Vari\^ancia   \\
@@ -15,7 +15,7 @@ SST     & 1200 & 9,83 &  3,8 &  19,7 &  15,9 &  4,5 &  20,24 \\
 \legend{\textbf{Fonte: } (Autor, 2019).}
 \end{table}
 
-Inicialmente os modelos construídos na literatura foram replicados para as mangas Palmer, para a comparação dos resultados. No trabalho de Khairunniza-Bejo e Kamarudin (2011), o atributo SST foi previsto em mangas Chokanan a partir do espaço de cores HSV. Os autores construíram modelos de Regressão Linear Simples para cada canal deste espaço de cor, e obtiveram como melhor resultado um coeficiente de correlação igual a -0,92 para o canal matiz. Assim, para as mangas da variedade Palmer, também foi construída uma Regressão linear com o atributo matiz como entrada. Entretanto, esperava-se um resultado inferior aos obtidos pelos autores, visto que, para as mangas Palmer, o atributo matiz não varia linearmente. A Figura \ref{fig:hue_sst} mostra a variação do SST de acordo com a matiz. 
+Inicialmente os modelos construídos na literatura foram replicados para as mangas Palmer, para a comparação dos resultados. No trabalho de Khairunniza-Bejo e Kamarudin (2011), o atributo SST foi previsto em mangas Chokanan a partir do espaço de cores HSV. Os autores construíram modelos de Regressão Linear Simples para cada canal deste espaço de cor, e obtiveram como melhor resultado um coeficiente de correlação igual a -0,92 para o canal matiz. Assim, para as mangas da variedade Palmer, também foi construída uma Regressão linear com o atributo matiz como entrada. Entretanto, os resultados foram inferiores aos obtidos pelos autores, visto que, para as mangas Palmer, o atributo matiz não variou linearmente. A Figura \ref{fig:hue_sst} mostra a variação do SST de acordo com a matiz. 
 
 \begin{figure}[H]
 \centering
@@ -34,7 +34,7 @@ Conforme esperado, o coeficiente de correlação obtido para a Regressão linear
     \legend{\textbf{Fonte: } (Autor, 2019; Khairunniza-Bejo, Kamarudin, 2011).}
 \end{figure}
 
-Devido ao relacionamento não linear entre a matiz e SST, esperava-se que com a \textit{Random Forest} fosse obtido um resultado superior. Os valores de $R$ e $RMSE$ obtidos por ela e pela Regressão linear, para cada \textit{fold}, são mostrados na Figura \ref{fig:fold_sst_hue}.
+Devido à relação não linear entre a matiz e SST, esperava-se que com a \textit{Random Forest} fosse obtido um resultado superior. Os valores de $R$ e $RMSE$ obtidos por ela e pela Regressão linear, para cada \textit{fold}, são mostrados na Figura \ref{fig:fold_sst_hue}.
 
 \begin{figure}[H]
 \centering
@@ -44,7 +44,7 @@ Devido ao relacionamento não linear entre a matiz e SST, esperava-se que com a 
 	\legend{\textbf{Fonte:} (Autor, 2019).}\label{fig:fold_sst_hue}
 \end{figure}
 
-Apesar de a \textit{Random Forest} ser claramente superior à MLR, como esperado, o resultado ainda é inferior ao obtido pelos autores. Enquanto eles alcançaram um coeficiente de correlação igual a -0,92, o coeficiente médio obtido pela técnica \textit{ensemble} não alcançou o valor de 0,8. Ademais, o RMSE obtido no estudo é muito maior que o obtido por eles (0,033 ºBrix). Para as mangas da variedade Palmer, vê-se que este atributo não é suficiente para a determinação de SST como foi para as mangas da variedade Chokanan.
+Apesar de a \textit{Random Forest} ser claramente superior à Regressão linear múltipla, como esperado, o resultado ainda é inferior ao obtido pelos autores. Enquanto eles alcançaram um coeficiente de correlação igual a -0,92, o coeficiente médio obtido pela técnica \textit{ensemble} não alcançou o valor de 0,8. Ademais, o RMSE obtido no estudo é muito maior que o obtido por eles (0,033 ºBrix). Para as mangas da variedade Palmer, vê-se que este atributo não é suficiente para a determinação de SST como foi para as mangas da variedade Chokanan.
 
 Por outro lado, os autores Yahaya et al. (2015) testaram o espaço de cores RGB e obtiveram um coeficiente de correlação igual a 0,814 e RMSE igual a 1,218 ªBrix em mangas da variedade Sala. Para verificar se existe uma relação linear entre as variáveis RGB extraídas das mangas Palmer e o SST, foram plotadas as variações das mesmas, mostradas na Figura \ref{fig:rgb_sst}.
 
@@ -57,7 +57,7 @@ Por outro lado, os autores Yahaya et al. (2015) testaram o espaço de cores RGB 
     \legend{\textbf{Fonte: } (Autor, 2019).}
 \end{figure}
 
-Nota-se um comportamento aproximadamente linear para as três variáveis. Assim, esperava-se que, através da Regressão Linear Múltipla, fosse obtido um coeficiente de correlação maior que o obtido para a matiz.  Na Figura \ref{fig:fold_sst_rgb}, são mostrados os valores de R e RMSE para a Regressão Linear e também a \textit{Random Forest} em todos os \textit{folds}.
+Nota-se um comportamento aproximadamente linear para as três variáveis. Assim, esperava-se que, através da Regressão Linear Múltipla, fosse obtido um coeficiente de correlação maior que o obtido para a matiz. Na Figura \ref{fig:fold_sst_rgb}, são mostrados os valores de R e RMSE para a Regressão Linear e também a \textit{Random Forest} em todos os \textit{folds}.
 
 \begin{figure}[H]
 \centering
@@ -67,11 +67,11 @@ Nota-se um comportamento aproximadamente linear para as três variáveis. Assim,
 	\legend{\textbf{Fonte:} (Autor, 2019).}\label{fig:fold_sst_rgb}
 \end{figure}
 
-Os valores médios dos coeficientes de correlação para a MLR e RF foram, respectivamente, iguais a 0,8312 e 0,9415. Ambas métricas mostraram-se superiores à obtida por Yahaya et al. (2015). Entretanto, o valor de RMSE obtido por eles ainda mostra-se menor que os alcançados para as mangas Palmer.
+Os valores médios dos coeficientes de correlação para a MLR e RF foram, respectivamente, iguais a 0,8312 e 0,9415. Ambas métricas mostraram-se superiores à obtida por Yahaya et al. (2015). Entretanto, o valor de RMSE obtido pelos referidos autores foram menores que os alcançados para as mangas da variedade Palmer.
 
 \section{Modelo com todas as variáveis}
 
-Assim, para a obtenção de um modelo que melhor explique a variação de SST, foi construída uma \textit{Random Forest} com todas as variáveis listadas na Tabela \ref{tbl:var_gps}. Com um maior número de variáveis de entrada, há uma maior quantidade de informações associada à cada manga, aumentando-se assim a probabilidade de alcançar melhores resultados. Da mesma forma, foi construída uma Regressão Linear Múltipla com as mesmas variáveis, de forma a verificar se o relacionamento existente entre as variáveis de entrada e o SST é linear. Os valores de R e RMSE para cada \textit{fold} dos modelos RF e MLR são mostrados na Tabela \ref{tbl:r_rmse_all}.
+Assim, para a obtenção de um modelo que melhor explique a variação de SST, foi construída uma \textit{Random Forest} com todas as variáveis listadas na Tabela \ref{tab:artigos_att}. Com um maior número de variáveis de entrada, há uma maior quantidade de informações associada à cada manga, aumentando-se assim a probabilidade de alcançar melhores resultados. Da mesma forma, foi construída uma Regressão Linear Múltipla com as mesmas variáveis, de forma a verificar se a relação existente entre as variáveis de entrada e o SST é linear. Os valores de R e RMSE para cada \textit{fold} dos modelos RF e MLR são mostrados na Tabela \ref{tbl:r_rmse_all}.
 
 \begin{table}[H]
 	\centering
@@ -101,7 +101,7 @@ Os atributos mais importantes para a determinação de SST em mangas Palmer pode
 	\legend{\textbf{Fonte:} (Autor, 2019).}\label{fig:feat_import}
 \end{figure}
 
-Nota-se que o espaço de cores RGB, especialmente o canal B, foi o que mais possuiu relação com o SST. O atributo taxa R/B, que indica a razão entre o valor médio das intensidades no canal R e canal B, mostrou-se o mais significativo. A Figura \ref{fig:rbrate_fig} exibe uma foto em que as intensidades dos pixels originais foram convertidas para R/B. Nota-se, através dela, que a cor arroxeada/amarelada está fortemente associada aos sólidos solúveis totais.
+Nota-se que o espaço de cores RGB, especialmente o canal B, foi o que mais possuiu relação com o SST. O atributo taxa R/B, que indica a razão entre o valor médio das intensidades no canal R e canal B, foi o mais significativo. Pode-se verificar, através da Figura \ref{fig:rbrate_fig}, as intensidades originais dos pixels convertidas para R/B, onde a manga apresenta tons arroxeados.
 
 \begin{figure}[H]
 \centering
@@ -119,7 +119,7 @@ O segundo atributo mais importante, a dimensão de correlação, estima o grau d
 	\legend{\textbf{Fonte:} (Autor, 2019).}\label{fig:equator_stalk_b}
 \end{figure}
 
-Para entender a relação destas variáveis com o SST, foram plotadas as variações delas de acordo com o atributo de qualidade estudado, conforme mostra a Figura \ref{fig:var_atts}.
+Para entender a relação destas variáveis com os sólidos solúveis totais, foram plotadas as variações delas de acordo com o atributo de qualidade estudado, conforme mostra a Figura \ref{fig:var_atts}.
 
 \begin{figure}[H]
 \centering
